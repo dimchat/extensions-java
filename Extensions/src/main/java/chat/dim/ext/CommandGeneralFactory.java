@@ -35,8 +35,12 @@ import java.util.Map;
 
 import chat.dim.data.Converter;
 import chat.dim.data.Wrapper;
+import chat.dim.dkd.cmd.BaseReceiptCommand;
 import chat.dim.protocol.Command;
 import chat.dim.protocol.Content;
+import chat.dim.protocol.Envelope;
+import chat.dim.protocol.ID;
+import chat.dim.protocol.ReceiptCommand;
 
 /**
  *  Command GeneralFactory
@@ -48,6 +52,35 @@ public class CommandGeneralFactory implements GeneralCommandHelper, CommandHelpe
     @Override
     public String getCmd(Map<?, ?> content, String defaultValue) {
         return Converter.getString(content.get("command"), defaultValue);
+    }
+
+    @Override
+    public Command createReceipt(String text, Envelope head, Content body) {
+        Map<String, Object> origin;
+        if (head == null) {
+            origin = null;
+        } else {
+            origin = head.copyMap(false);
+            if (origin.containsKey("data")) {
+                origin.remove("data");
+                origin.remove("keys");
+                origin.remove("meta");
+                origin.remove("visa");
+            }
+            if (body != null) {
+                long sn = body.getSerialNumber();
+                origin.put("sn", sn);
+            }
+        }
+        ReceiptCommand content = new BaseReceiptCommand(text, origin);
+        if (body != null) {
+            // check group
+            ID group = body.getGroup();
+            if (group != null) {
+                content.setGroup(group);
+            }
+        }
+        return content;
     }
 
     //
