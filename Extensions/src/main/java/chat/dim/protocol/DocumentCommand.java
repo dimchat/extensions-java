@@ -28,36 +28,55 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim.dkd.cmd;
+package chat.dim.protocol;
 
-import java.util.Map;
+import java.util.Date;
+import java.util.List;
 
-import chat.dim.dkd.BaseCommand;
-import chat.dim.protocol.ContentType;
-import chat.dim.protocol.HistoryCommand;
+import chat.dim.dkd.cmd.BaseDocumentCommand;
 
 /**
- *  History Command Content
+ *  Document Command
  *
  *  <blockquote><pre>
  *  data format: {
- *      "type" : i2s(0x89),
+ *      "type" : i2s(0x88),
  *      "sn"   : 123,
  *
- *      "command" : "...", // command name
- *      "time"    : 0,     // command timestamp
- *      "extra"   : info   // command parameters
+ *      "command"   : "documents", // command name
+ *      "did"       : "{ID}",      // entity ID
+ *      "meta"      : {...},       // only for handshaking with new friend
+ *      "documents" : [...],       // when this is null, means to query
+ *      "last_time" : 12345        // old document time for querying
  *  }
  *  </pre></blockquote>
  */
-public class BaseHistoryCommand extends BaseCommand implements HistoryCommand {
+public interface DocumentCommand extends MetaCommand {
 
-    public BaseHistoryCommand(Map<String, Object> content) {
-        super(content);
+    String DOCUMENTS = "documents";
+
+    /**
+     *  Entity Documents
+     */
+    List<Document> getDocuments();
+
+    /**
+     *  Last document time for querying
+     *
+     * @return time of last document from sender
+     */
+    Date getLastTime();
+
+    //
+    //  Factories
+    //
+
+    static DocumentCommand query(ID did, Date last) {
+        return new BaseDocumentCommand(did, last);
     }
 
-    public BaseHistoryCommand(String cmd) {
-        super(ContentType.HISTORY, cmd);
+    static DocumentCommand response(ID did, Meta meta, List<Document> documents) {
+        return new BaseDocumentCommand(did, meta, documents);
     }
 
 }

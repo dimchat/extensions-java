@@ -28,7 +28,7 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim.plugins;
+package chat.dim;
 
 
 /**
@@ -53,9 +53,6 @@ public class ExtensionLoader implements CoreExtensions, EntityExtensions, Messag
      *  Core extensions
      */
     protected void loadCoreHelpers() {
-
-        registerCryptoHelpers();
-        registerFormatHelpers();
 
         registerAccountHelpers();
 

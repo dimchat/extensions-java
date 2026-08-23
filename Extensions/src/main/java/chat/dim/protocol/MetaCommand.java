@@ -28,36 +28,48 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim.dkd.cmd;
+package chat.dim.protocol;
 
-import java.util.Map;
-
-import chat.dim.dkd.BaseCommand;
-import chat.dim.protocol.ContentType;
-import chat.dim.protocol.HistoryCommand;
+import chat.dim.dkd.cmd.BaseMetaCommand;
 
 /**
- *  History Command Content
+ *  Meta Command
  *
  *  <blockquote><pre>
  *  data format: {
- *      "type" : i2s(0x89),
+ *      "type" : i2s(0x88),
  *      "sn"   : 123,
  *
- *      "command" : "...", // command name
- *      "time"    : 0,     // command timestamp
- *      "extra"   : info   // command parameters
+ *      "command" : "meta", // command name
+ *      "did"     : "{ID}", // contact's ID
+ *      "meta"    : {...}   // when meta is null, means query meta for ID
  *  }
  *  </pre></blockquote>
  */
-public class BaseHistoryCommand extends BaseCommand implements HistoryCommand {
+public interface MetaCommand extends Command {
 
-    public BaseHistoryCommand(Map<String, Object> content) {
-        super(content);
+    String META      = "meta";
+
+    /**
+     *  Entity ID
+     */
+    ID getIdentifier();
+
+    /**
+     *  Entity Meta
+     */
+    Meta getMeta();
+
+    //
+    //  Factories
+    //
+
+    static MetaCommand query(ID did) {
+        return new BaseMetaCommand(did);
     }
 
-    public BaseHistoryCommand(String cmd) {
-        super(ContentType.HISTORY, cmd);
+    static MetaCommand response(ID did, Meta meta) {
+        return new BaseMetaCommand(did, meta);
     }
 
 }

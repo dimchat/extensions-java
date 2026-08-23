@@ -28,68 +28,54 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim.plugins;
+package chat.dim;
 
-import chat.dim.mkm.BaseAddressFactory;
-import chat.dim.mkm.BaseMetaFactory;
-import chat.dim.mkm.GeneralDocumentFactory;
-import chat.dim.mkm.IdentifierFactory;
-import chat.dim.protocol.Address;
-import chat.dim.protocol.Document;
-import chat.dim.protocol.DocumentType;
-import chat.dim.protocol.ID;
-import chat.dim.protocol.Meta;
-import chat.dim.protocol.MetaType;
+import chat.dim.ext.AccountGeneralFactory;
+import chat.dim.ext.CommandGeneralFactory;
+import chat.dim.ext.MessageGeneralFactory;
+import chat.dim.ext.SharedAccountExtensions;
+import chat.dim.ext.SharedCommandExtensions;
+import chat.dim.ext.SharedMessageExtensions;
 
 
 // MixIn
-public interface EntityExtensions {
+public interface CoreExtensions {
 
     // protected
-    default void registerIDFactory() {
+    default  void registerAccountHelpers() {
 
-        ID.setFactory(new IdentifierFactory());
+        // mkm
+        AccountGeneralFactory accountHelper = new AccountGeneralFactory();
+        SharedAccountExtensions.addressHelper = accountHelper;
+        SharedAccountExtensions.idHelper      = accountHelper;
+        SharedAccountExtensions.metaHelper    = accountHelper;
+        SharedAccountExtensions.docHelper     = accountHelper;
+        SharedAccountExtensions.helper        = accountHelper;
 
     }
 
     // protected
-    default void registerAddressFactory() {
+    default  void registerMessageHelpers() {
 
-        Address.setFactory(new BaseAddressFactory());
+        // dkd
+        MessageGeneralFactory msgHelper = new MessageGeneralFactory();
+        SharedMessageExtensions.contentHelper  = msgHelper;
+        SharedMessageExtensions.envelopeHelper = msgHelper;
+        SharedMessageExtensions.instantHelper  = msgHelper;
+        SharedMessageExtensions.secureHelper   = msgHelper;
+        SharedMessageExtensions.reliableHelper = msgHelper;
+        SharedMessageExtensions.helper         = msgHelper;
 
     }
 
     // protected
-    default void registerMetaFactories() {
+    default  void registerCommandHelpers() {
 
-        setMetaFactory(MetaType.MKM, null);
-        setMetaFactory(MetaType.BTC, null);
-        setMetaFactory(MetaType.ETH, null);
+        // cmd
+        CommandGeneralFactory cmdHelper = new CommandGeneralFactory();
+        SharedCommandExtensions.cmdHelper = cmdHelper;
+        SharedCommandExtensions.helper    = cmdHelper;
 
-    }
-    // protected
-    default void setMetaFactory(String type, Meta.Factory factory) {
-        if (factory == null) {
-            factory = new BaseMetaFactory(type);
-        }
-        Meta.setFactory(type, factory);
-    }
-
-    // protected
-    default void registerDocumentFactories() {
-
-        setDocumentFactory("*", null);
-        setDocumentFactory(DocumentType.VISA, null);
-        setDocumentFactory(DocumentType.PROFILE, null);
-        setDocumentFactory(DocumentType.BULLETIN, null);
-
-    }
-    // protected
-    default void setDocumentFactory(String type, Document.Factory factory) {
-        if (factory == null) {
-            factory = new GeneralDocumentFactory(type);
-        }
-        Document.setFactory(type, factory);
     }
 
 }

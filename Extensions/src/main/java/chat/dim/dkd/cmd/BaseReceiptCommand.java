@@ -33,6 +33,7 @@ package chat.dim.dkd.cmd;
 import java.util.Map;
 
 import chat.dim.data.Converter;
+import chat.dim.dkd.BaseCommand;
 import chat.dim.protocol.Envelope;
 import chat.dim.protocol.ReceiptCommand;
 

@@ -28,7 +28,7 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim.plugins;
+package chat.dim;
 
 import chat.dim.dkd.BaseContent;
 import chat.dim.dkd.BaseQuoteContent;
@@ -59,8 +59,11 @@ import chat.dim.msg.MessageFactory;
 import chat.dim.protocol.Command;
 import chat.dim.protocol.Content;
 import chat.dim.protocol.ContentType;
+import chat.dim.protocol.DocumentCommand;
 import chat.dim.protocol.Envelope;
 import chat.dim.protocol.InstantMessage;
+import chat.dim.protocol.MetaCommand;
+import chat.dim.protocol.ReceiptCommand;
 import chat.dim.protocol.ReliableMessage;
 import chat.dim.protocol.SecureMessage;
 import chat.dim.protocol.group.GroupCommand;
@@ -145,13 +148,13 @@ public interface MessageFactoryExtensions {
     default void registerCommandFactories() {
 
         // Meta Command
-        Command.setFactory(Command.META, BaseMetaCommand::new);
+        Command.setFactory(MetaCommand.META, BaseMetaCommand::new);
 
         // Documents Command
-        Command.setFactory(Command.DOCUMENTS, BaseDocumentCommand::new);
+        Command.setFactory(DocumentCommand.DOCUMENTS, BaseDocumentCommand::new);
 
         // Receipt Command
-        Command.setFactory(Command.RECEIPT, BaseReceiptCommand::new);
+        Command.setFactory(ReceiptCommand.RECEIPT, BaseReceiptCommand::new);
 
         // Group Commands
         Command.setFactory("group", new GroupCommandFactory());

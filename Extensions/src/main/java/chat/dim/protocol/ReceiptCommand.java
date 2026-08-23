@@ -30,7 +30,6 @@
  */
 package chat.dim.protocol;
 
-import chat.dim.dkd.cmd.BaseReceiptCommand;
 import chat.dim.ext.GeneralCommandHelper;
 import chat.dim.ext.SharedCommandExtensions;
 
@@ -56,6 +55,8 @@ import chat.dim.ext.SharedCommandExtensions;
  *  </pre></blockquote>
  */
 public interface ReceiptCommand extends Command {
+
+    String RECEIPT   = "receipt";
 
     String getText();
 

@@ -33,31 +33,76 @@ package chat.dim.dkd.cmd;
 import java.util.Map;
 
 import chat.dim.dkd.BaseCommand;
-import chat.dim.protocol.ContentType;
-import chat.dim.protocol.HistoryCommand;
+import chat.dim.protocol.ID;
+import chat.dim.protocol.Meta;
+import chat.dim.protocol.MetaCommand;
 
 /**
- *  History Command Content
+ *  Meta Command Content
  *
  *  <blockquote><pre>
  *  data format: {
- *      "type" : i2s(0x89),
+ *      "type" : i2s(0x88),
  *      "sn"   : 123,
  *
- *      "command" : "...", // command name
- *      "time"    : 0,     // command timestamp
- *      "extra"   : info   // command parameters
+ *      "command" : "meta", // command name
+ *      "did"     : "{ID}", // contact's ID
+ *      "meta"    : {...}   // when meta is null, means query meta for ID
  *  }
  *  </pre></blockquote>
  */
-public class BaseHistoryCommand extends BaseCommand implements HistoryCommand {
+public class BaseMetaCommand extends BaseCommand implements MetaCommand {
 
-    public BaseHistoryCommand(Map<String, Object> content) {
+    private Meta meta;
+
+    public BaseMetaCommand(Map<String, Object> content) {
         super(content);
+        // lazy
+        meta = null;
     }
 
-    public BaseHistoryCommand(String cmd) {
-        super(ContentType.HISTORY, cmd);
+    public BaseMetaCommand(String cmd, ID did, Meta meta) {
+        super(cmd);
+        // ID
+        assert did != null : "ID cannot be empty for meta command";
+        put("did", did.toString());
+        // meta
+        if (meta != null) {
+            put("meta", meta.toMap());
+        }
+        this.meta = meta;
+    }
+
+    /**
+     *  Response Meta
+     *
+     * @param did  - entity ID
+     * @param meta - entity Meta
+     */
+    public BaseMetaCommand(ID did, Meta meta) {
+        this(META, did, meta);
+    }
+
+    /**
+     *  Query Meta
+     *
+     * @param did - entity ID
+     */
+    public BaseMetaCommand(ID did) {
+        this(META, did, null);
+    }
+
+    @Override
+    public ID getIdentifier() {
+        return ID.parse(get("did"));
+    }
+
+    @Override
+    public Meta getMeta() {
+        if (meta == null) {
+            meta = Meta.parse(get("meta"));
+        }
+        return meta;
     }
 
 }
