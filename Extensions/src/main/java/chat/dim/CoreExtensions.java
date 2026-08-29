@@ -32,9 +32,11 @@ package chat.dim;
 
 import chat.dim.ext.AccountGeneralFactory;
 import chat.dim.ext.CommandGeneralFactory;
+import chat.dim.ext.FormatGeneralFactory;
 import chat.dim.ext.MessageGeneralFactory;
 import chat.dim.ext.SharedAccountExtensions;
 import chat.dim.ext.SharedCommandExtensions;
+import chat.dim.ext.SharedFormatExtensions;
 import chat.dim.ext.SharedMessageExtensions;
 
 
@@ -42,7 +44,7 @@ import chat.dim.ext.SharedMessageExtensions;
 public interface CoreExtensions {
 
     // protected
-    default  void registerAccountHelpers() {
+    default void registerAccountHelpers() {
 
         // mkm
         AccountGeneralFactory accountHelper = new AccountGeneralFactory();
@@ -55,7 +57,7 @@ public interface CoreExtensions {
     }
 
     // protected
-    default  void registerMessageHelpers() {
+    default void registerMessageHelpers() {
 
         // dkd
         MessageGeneralFactory msgHelper = new MessageGeneralFactory();
@@ -69,12 +71,22 @@ public interface CoreExtensions {
     }
 
     // protected
-    default  void registerCommandHelpers() {
+    default void registerCommandHelpers() {
 
         // cmd
         CommandGeneralFactory cmdHelper = new CommandGeneralFactory();
         SharedCommandExtensions.cmdHelper = cmdHelper;
         SharedCommandExtensions.helper    = cmdHelper;
+
+    }
+
+    // protected
+    default void registerFormatHelpers() {
+
+        // format
+        FormatGeneralFactory formatHelper = new FormatGeneralFactory();
+        SharedFormatExtensions.pnfHelper = formatHelper;
+        SharedFormatExtensions.tedHelper = formatHelper;
 
     }
 

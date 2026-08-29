@@ -40,6 +40,7 @@ import chat.dim.protocol.Content;
 import chat.dim.protocol.Envelope;
 import chat.dim.protocol.ID;
 import chat.dim.protocol.InstantMessage;
+import chat.dim.protocol.Message;
 import chat.dim.protocol.ReliableMessage;
 import chat.dim.protocol.SecureMessage;
 
@@ -61,6 +62,20 @@ public class MessageGeneralFactory implements GeneralMessageHelper,
     @Override
     public String getContentType(Map<?, ?> content, String defaultValue) {
         return Converter.getString(content.get("type"), defaultValue);
+    }
+
+    @Override
+    public boolean isBroadcast(Message msg) {
+        if (msg.getReceiver().isBroadcast()) {
+            return true;
+        }
+        // check exposed group
+        Object overtGroup = msg.get("group");
+        if (overtGroup == null) {
+            return false;
+        }
+        ID group = ID.parse(overtGroup);
+        return group != null && group.isBroadcast();
     }
 
     //

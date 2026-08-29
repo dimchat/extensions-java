@@ -1,13 +1,8 @@
 /* license: https://mit-license.org
- *
- *  DIMP : Decentralized Instant Messaging Protocol
- *
- *                                Written in 2022 by Moky <albert.moky@gmail.com>
- *
  * ==============================================================================
  * The MIT License (MIT)
  *
- * Copyright (c) 2022 Albert Moky
+ * Copyright (c) 2025 Albert Moky
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,76 +23,56 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim;
+package chat.dim.format;
+
+import java.net.URI;
+import java.util.Map;
+
+import chat.dim.protocol.DecryptKey;
+import chat.dim.protocol.TransportableData;
 
 
 /**
- *  Core Extensions Loader
+ *  PNF Wrapper
  */
-public class ExtensionLoader implements TransportableExtensions, CoreExtensions, EntityExtensions, MessageFactoryExtensions {
+public interface TransportableFileWrapper {
+
+    // serialize data
+    Map<String, Object> toMap();
 
     /**
-     *  Register core factories
+     *  file data
      */
-    public void load() {
-
-        loadCoreHelpers();
-
-        loadEntityFactories();
-
-        loadMessageFactories();
-
-        loadFormatFactories();
-
-    }
+    TransportableData getData();
+    void setData(TransportableData ted);
 
     /**
-     *  Core extensions
+     *  file name
      */
-    protected void loadCoreHelpers() {
-
-        registerAccountHelpers();
-
-        registerMessageHelpers();
-        registerCommandHelpers();
-
-        registerFormatHelpers();
-
-    }
+    String getFilename();
+    void setFilename(String name);
 
     /**
-     *  ID, Address, Meta, Document parsers
+     *  download URL
      */
-    protected void loadEntityFactories() {
-
-        registerIDFactory();
-        registerAddressFactory();
-
-        registerMetaFactories();
-
-        registerDocumentFactories();
-
-    }
+    URI getURL();
+    void setURL(URI remote);
 
     /**
-     *  Message Factories
+     *  decrypt key
      */
-    protected void loadMessageFactories() {
-
-        registerMessageFactories();
-
-        registerContentFactories();
-        registerCommandFactories();
-
-    }
+    DecryptKey getPassword();
+    void setPassword(DecryptKey password);
 
     /**
-     *  Format extensions
+     *  Wrapper Factory
      */
-    protected void loadFormatFactories() {
+    interface Factory {
 
-        registerPNFFactory();
-        registerTEDFactory();
+        TransportableFileWrapper createTransportableFileWrapper(Map<String, Object> content);
+
+        TransportableFileWrapper createTransportableFileWrapper(Map<String, Object> content,
+                                                                TransportableData data, String filename, URI url, DecryptKey password);
 
     }
 
