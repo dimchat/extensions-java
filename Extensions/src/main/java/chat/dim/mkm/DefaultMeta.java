@@ -30,7 +30,6 @@
  */
 package chat.dim.mkm;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import chat.dim.protocol.Address;
@@ -66,22 +65,11 @@ public final class DefaultMeta extends BaseMeta {
         return true;
     }
 
-    // caches
-    private final Map<Byte, Address> cachedAddresses = new HashMap<>();
-
     @Override
-    public Address generateAddress(int type) {
+    protected Address generateAddress(int network) {
         //assert Meta.MKM.equals(getType()) || "1".equals(getType()) : "meta version error: " + getType();
-        byte network = (byte) type;
-        // check caches
-        Address cached = cachedAddresses.get(network);
-        if (cached == null) {
-            // generate and cache it
-            TransportableData data = getFingerprint();
-            assert data != null && !data.isEmpty() : "meta.fingerprint empty";
-            cached = BTCAddress.generate(data.getBytes(), network);
-            cachedAddresses.put(network, cached);
-        }
-        return cached;
+        TransportableData data = getFingerprint();
+        assert data != null && !data.isEmpty() : "meta.fingerprint empty";
+        return BTCAddress.generate(data.getBytes(), (byte) network);
     }
 }

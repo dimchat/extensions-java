@@ -69,24 +69,14 @@ public final class ETHMeta extends BaseMeta {
         return false;
     }
 
-    // cache
-    private Address cachedAddress = null;
-
     @Override
-    public Address generateAddress(int type) {
+    protected Address generateAddress(int type) {
         //assert Meta.ETH.equals(getType()) || "4".equals(getType()) : "meta version error: " + getType();
         assert EntityType.USER.equals(type) : "ETH address type error: " + type;
-        // check cache
-        Address cached = cachedAddress;
-        if (cached == null/* || cached.getType() != type*/) {
-            // 64 bytes key data without prefix 0x04
-            VerifyKey key = getPublicKey();
-            TransportableData data = key.getData();
-            assert data != null && !data.isEmpty() : "meta.key error: " + key;
-            // generate and cache it
-            cached = ETHAddress.generate(data.getBytes());
-            cachedAddress = cached;
-        }
-        return cached;
+        VerifyKey key = getPublicKey();
+        // 64 bytes key data without prefix 0x04
+        TransportableData data = key.getData();
+        assert data != null && !data.isEmpty() : "meta.key error: " + key;
+        return ETHAddress.generate(data.getBytes());
     }
 }

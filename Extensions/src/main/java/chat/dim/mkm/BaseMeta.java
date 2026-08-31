@@ -30,10 +30,14 @@
  */
 package chat.dim.mkm;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import chat.dim.ext.SharedAccountExtensions;
 import chat.dim.format.UTF8;
+import chat.dim.mem.SharedAccountCache;
+import chat.dim.protocol.Address;
+import chat.dim.protocol.ID;
 import chat.dim.protocol.Meta;
 import chat.dim.protocol.PublicKey;
 import chat.dim.protocol.TransportableData;
@@ -233,5 +237,42 @@ public abstract class BaseMeta extends Dictionary implements Meta {
         byte[] data = UTF8.encode(seed);
         return key.verify(data, fingerprint.getBytes());
     }
+
+    //
+    //  Generation
+    //
+
+    private final Map<Byte, ID> caches = new HashMap<>();
+
+    @Override
+    public ID generateID(int type) {
+        // check valid
+        if (!isValid()) {
+            assert false : "meta invalid: " + toMap();
+            return null;
+        }
+        byte network = (byte) type;
+        ID did = caches.get(network);
+        if (did == null) {
+            Address address = generateAddress(network);
+            if (address == null) {
+                assert false : "failed to generate ID: " + network + ", " + toMap();
+                return null;
+            }
+            did = ID.create(getSeed(), address, null);
+            SharedAccountCache.addressCache.put(address.toString(), address);
+            SharedAccountCache.idCache.put(did.toString(), did);
+            caches.put(network, did);
+        }
+        return did;
+    }
+
+    /**
+     *  Generate address
+     *
+     * @param network - address type
+     * @return Address
+     */
+    protected abstract Address generateAddress(int network);
 
 }

@@ -30,7 +30,6 @@
  */
 package chat.dim.mkm;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import chat.dim.protocol.Address;
@@ -70,24 +69,13 @@ public final class BTCMeta extends BaseMeta {
         return false;
     }
 
-    // caches
-    private final Map<Byte, Address> cachedAddresses = new HashMap<>();
-
     @Override
-    public Address generateAddress(int type) {
+    protected Address generateAddress(int network) {
         //assert Meta.BTC.equals(getType()) || "2".equals(getType()) : "meta version error: " + getType();
-        byte network = (byte) type;
-        // check caches
-        Address cached = cachedAddresses.get(network);
-        if (cached == null) {
-            // TODO: compress public key?
-            VerifyKey key = getPublicKey();
-            TransportableData data = key.getData();
-            assert data != null && !data.isEmpty() : "meta.key error: " + key;
-            // generate and cache it
-            cached = BTCAddress.generate(data.getBytes(), network);
-            cachedAddresses.put(network, cached);
-        }
-        return cached;
+        VerifyKey key = getPublicKey();
+        // TODO: compress public key?
+        TransportableData data = key.getData();
+        assert data != null && !data.isEmpty() : "meta.key error: " + key;
+        return BTCAddress.generate(data.getBytes(), (byte) network);
     }
 }
