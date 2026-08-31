@@ -64,7 +64,8 @@ import chat.dim.protocol.TransportableData;
  */
 public class BaseFileContent extends BaseContent implements FileContent {
 
-    private final TransportableFileWrapper wrapper;
+    // private
+    public final TransportableFileWrapper wrapper;
 
     public BaseFileContent(Map<String, Object> content) {
         super(content);
@@ -83,6 +84,14 @@ public class BaseFileContent extends BaseContent implements FileContent {
         // call wrapper to serialize 'data' & 'key"
         return wrapper.toMap();
     }
+
+    /*/
+    @Override
+    public TransportableFile toTransportableFile() {
+        // clone without serializations
+        return new PortableNetworkFile(super.toMap(), wrapper);
+    }
+    /*/
 
     /**
      *  file data

@@ -79,6 +79,14 @@ public interface FileContent extends Content {
     void setPassword(DecryptKey key);
     DecryptKey getPassword();
 
+    /*/
+    //
+    //  PNF transforming
+    //
+
+    TransportableFile toTransportableFile();
+    /*/
+
     //
     //  Factories
     //

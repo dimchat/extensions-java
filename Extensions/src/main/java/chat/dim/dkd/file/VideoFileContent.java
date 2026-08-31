@@ -86,6 +86,19 @@ public class VideoFileContent extends BaseFileContent implements VideoContent {
         return super.toMap();
     }
 
+    /*/
+    @Override
+    public TransportableFile toTransportableFile() {
+        // serialize 'snapshot'
+        TransportableFile img = snapshot;
+        if (img != null && !containsKey("snapshot")) {
+            put("snapshot", img.serialize());
+        }
+        // clone without other serializations
+        return super.toTransportableFile();
+    }
+    /*/
+
     @Override
     public void setSnapshot(TransportableFile img) {
         remove("snapshot");

@@ -86,6 +86,19 @@ public class ImageFileContent extends BaseFileContent implements ImageContent {
         return super.toMap();
     }
 
+    /*/
+    @Override
+    public TransportableFile toTransportableFile() {
+        // serialize 'thumbnail'
+        TransportableFile img = thumbnail;
+        if (img != null && !containsKey("thumbnail")) {
+            put("thumbnail", img.serialize());
+        }
+        // clone without other serializations
+        return super.toTransportableFile();
+    }
+    /*/
+
     @Override
     public void setThumbnail(TransportableFile img) {
         remove("thumbnail");
