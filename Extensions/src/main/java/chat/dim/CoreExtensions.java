@@ -32,11 +32,9 @@ package chat.dim;
 
 import chat.dim.ext.AccountGeneralFactory;
 import chat.dim.ext.CommandGeneralFactory;
-import chat.dim.ext.FormatGeneralFactory;
 import chat.dim.ext.MessageGeneralFactory;
 import chat.dim.ext.SharedAccountExtensions;
 import chat.dim.ext.SharedCommandExtensions;
-import chat.dim.ext.SharedFormatExtensions;
 import chat.dim.ext.SharedMessageExtensions;
 
 
@@ -77,16 +75,6 @@ public interface CoreExtensions {
         CommandGeneralFactory cmdHelper = new CommandGeneralFactory();
         SharedCommandExtensions.cmdHelper = cmdHelper;
         SharedCommandExtensions.helper    = cmdHelper;
-
-    }
-
-    // protected
-    default void registerFormatHelpers() {
-
-        // format
-        FormatGeneralFactory formatHelper = new FormatGeneralFactory();
-        SharedFormatExtensions.pnfHelper = formatHelper;
-        SharedFormatExtensions.tedHelper = formatHelper;
 
     }
 

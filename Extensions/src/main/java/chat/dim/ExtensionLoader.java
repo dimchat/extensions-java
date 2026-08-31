@@ -34,7 +34,7 @@ package chat.dim;
 /**
  *  Core Extensions Loader
  */
-public class ExtensionLoader implements TransportableExtensions, CoreExtensions, EntityExtensions, MessageFactoryExtensions {
+public class ExtensionLoader implements CoreExtensions, EntityExtensions, MessageFactoryExtensions {
 
     /**
      *  Register core factories
@@ -47,8 +47,6 @@ public class ExtensionLoader implements TransportableExtensions, CoreExtensions,
 
         loadMessageFactories();
 
-        loadFormatFactories();
-
     }
 
     /**
@@ -60,8 +58,6 @@ public class ExtensionLoader implements TransportableExtensions, CoreExtensions,
 
         registerMessageHelpers();
         registerCommandHelpers();
-
-        registerFormatHelpers();
 
     }
 
@@ -88,16 +84,6 @@ public class ExtensionLoader implements TransportableExtensions, CoreExtensions,
 
         registerContentFactories();
         registerCommandFactories();
-
-    }
-
-    /**
-     *  Format extensions
-     */
-    protected void loadFormatFactories() {
-
-        registerPNFFactory();
-        registerTEDFactory();
 
     }
 

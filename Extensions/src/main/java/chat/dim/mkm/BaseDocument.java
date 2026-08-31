@@ -35,7 +35,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chat.dim.data.Converter;
-import chat.dim.format.Base64Data;
 import chat.dim.format.JSONMap;
 import chat.dim.format.UTF8;
 import chat.dim.protocol.Document;
@@ -260,7 +259,7 @@ public class BaseDocument extends Dictionary implements Document {
         assert data.length() > 0 : "should not happen: " + dict;
         signature = privateKey.sign(UTF8.encode(data));
         assert signature.length > 0 : "should not happen: " + dict;
-        TransportableData ted = Base64Data.create(signature);
+        TransportableData ted = TransportableData.create(signature);
         // 3. update 'data' & 'signature' fields
         put("data", data);                 // JSON string
         put("signature", ted.serialize());  // BASE-64
