@@ -55,7 +55,10 @@ import chat.dim.dkd.group.InviteGroupCommand;
 import chat.dim.dkd.group.JoinGroupCommand;
 import chat.dim.dkd.group.QuitGroupCommand;
 import chat.dim.dkd.group.ResetGroupCommand;
-import chat.dim.msg.MessageFactory;
+import chat.dim.msg.EnvelopeFactory;
+import chat.dim.msg.InstantMessageFactory;
+import chat.dim.msg.ReliableMessageFactory;
+import chat.dim.msg.SecureMessageFactory;
 import chat.dim.protocol.Command;
 import chat.dim.protocol.Content;
 import chat.dim.protocol.ContentType;
@@ -79,13 +82,12 @@ public interface MessageFactoryExtensions {
     default void registerMessageFactories() {
 
         // Envelope factory
-        MessageFactory factory = new MessageFactory();
-        Envelope.setFactory(factory);
+        Envelope.setFactory(new EnvelopeFactory());
 
         // Message factories
-        InstantMessage.setFactory(factory);
-        SecureMessage.setFactory(factory);
-        ReliableMessage.setFactory(factory);
+        InstantMessage.setFactory(new InstantMessageFactory());
+        SecureMessage.setFactory(new SecureMessageFactory());
+        ReliableMessage.setFactory(new ReliableMessageFactory());
 
     }
 

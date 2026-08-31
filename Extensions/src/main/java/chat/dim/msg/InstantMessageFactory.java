@@ -36,17 +36,16 @@ import java.util.Random;
 
 import chat.dim.protocol.Content;
 import chat.dim.protocol.Envelope;
-import chat.dim.protocol.ID;
 import chat.dim.protocol.InstantMessage;
-import chat.dim.protocol.ReliableMessage;
-import chat.dim.protocol.SecureMessage;
 
-public class MessageFactory implements Envelope.Factory,
-                                       InstantMessage.Factory, SecureMessage.Factory, ReliableMessage.Factory {
+/**
+ *  InstantMessage Factory
+ */
+public class InstantMessageFactory implements InstantMessage.Factory {
 
     private long sn;
 
-    public MessageFactory() {
+    public InstantMessageFactory() {
         super();
         Random random = new Random();
         int r = random.nextInt();    // -0x80000000 ~ 0x7fffffff
@@ -68,28 +67,6 @@ public class MessageFactory implements Envelope.Factory,
         return sn;
     }
 
-    //
-    //  Envelope.Factory
-    //
-    @Override
-    public Envelope createEnvelope(ID from, ID to, Date when) {
-        return new MessageEnvelope(from, to, when);
-    }
-
-    @Override
-    public Envelope parseEnvelope(Map<String, Object> env) {
-        // check 'sender'
-        if (env.get("sender") == null) {
-            // env.sender should not empty
-            assert false : "envelope error: " + env;
-            return null;
-        }
-        return new MessageEnvelope(env);
-    }
-
-    //
-    //  InstantMessage.Factory
-    //
     @Override
     public long generateSerialNumber(String msgType, Date time) {
         // because we must make sure all messages in a same chat box won't have
@@ -115,38 +92,4 @@ public class MessageFactory implements Envelope.Factory,
         return new PlainMessage(msg);
     }
 
-    //
-    //  SecureMessage.Factory
-    //
-    @Override
-    public SecureMessage parseSecureMessage(Map<String, Object> msg) {
-        // check 'sender', 'data'
-        if (msg.get("sender") == null || msg.get("data") == null) {
-            // msg.sender should not be empty
-            // msg.data should not be empty
-            assert false : "message error: " + msg;
-            return null;
-        }
-        // check 'signature'
-        if (msg.get("signature") != null) {
-            return new NetworkMessage(msg);
-        }
-        return new EncryptedMessage(msg);
-    }
-
-    //
-    //  ReliableMessage.Factory
-    //
-    @Override
-    public ReliableMessage parseReliableMessage(Map<String, Object> msg) {
-        // check 'sender', 'data', 'signature'
-        if (msg.get("sender") == null || msg.get("data") == null || msg.get("signature") == null) {
-            // msg.sender should not be empty
-            // msg.data should not be empty
-            // msg.signature should not be empty
-            assert false : "message error: " + msg;
-            return null;
-        }
-        return new NetworkMessage(msg);
-    }
 }
