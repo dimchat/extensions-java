@@ -45,11 +45,11 @@ import chat.dim.protocol.TransportableData;
 import chat.dim.protocol.VerifyKey;
 
 /**
- *  Account GeneralFactory
+ *  Account GeneralHelper
  */
-public class AccountGeneralFactory implements GeneralAccountHelper,
-                                              AddressHelper, IDHelper,
-                                              MetaHelper, DocumentHelper {
+public class GeneralAccountHelper implements AccountHelper,
+                                             AddressHelper, IDHelper,
+                                             MetaHelper, DocumentHelper {
 
     private Address.Factory addressFactory = null;
 
@@ -122,13 +122,6 @@ public class AccountGeneralFactory implements GeneralAccountHelper,
         return factory.parseAddress(str);
     }
 
-    @Override
-    public Address generateAddress(Meta meta, int network) {
-        Address.Factory factory = getAddressFactory();
-        assert factory != null : "address factory not ready";
-        return factory.generateAddress(meta, network);
-    }
-
     //
     //  ID Helper
     //
@@ -165,13 +158,6 @@ public class AccountGeneralFactory implements GeneralAccountHelper,
         ID.Factory factory = getIDFactory();
         assert factory != null : "ID factory not ready";
         return factory.createID(name, address, terminal);
-    }
-
-    @Override
-    public ID generateID(Meta meta, int network) {
-        ID.Factory factory = getIDFactory();
-        assert factory != null : "ID factory not ready";
-        return factory.generateID(meta, network);
     }
 
     //

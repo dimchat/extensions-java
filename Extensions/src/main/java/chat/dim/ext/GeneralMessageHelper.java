@@ -34,6 +34,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import chat.dim.crypto.EncryptedBundle;
 import chat.dim.data.Converter;
 import chat.dim.data.Wrapper;
 import chat.dim.protocol.Content;
@@ -45,11 +46,11 @@ import chat.dim.protocol.ReliableMessage;
 import chat.dim.protocol.SecureMessage;
 
 /**
- *  Message GeneralFactory
+ *  Message GeneralHelper
  */
-public class MessageGeneralFactory implements GeneralMessageHelper,
-                                              ContentHelper, EnvelopeHelper,
-                                              InstantMessageHelper, SecureMessageHelper, ReliableMessageHelper {
+public class GeneralMessageHelper implements MessageHelper,
+                                             ContentHelper, EnvelopeHelper,
+                                             InstantMessageHelper, SecureMessageHelper, ReliableMessageHelper {
 
     private final Map<String, Content.Factory> contentFactories = new HashMap<>();
 
@@ -233,6 +234,13 @@ public class MessageGeneralFactory implements GeneralMessageHelper,
         return factory.parseSecureMessage(info);
     }
 
+    @Override
+    public SecureMessage createSecureMessage(InstantMessage iMsg, byte[] ciphertext, Map<ID, EncryptedBundle> keyBundles) {
+        SecureMessage.Factory factory = getSecureMessageFactory();
+        assert factory != null : "secure message factory not ready: " + iMsg;
+        return factory.createSecureMessage(iMsg, ciphertext, keyBundles);
+    }
+
     //
     //  ReliableMessage Helper
     //
@@ -262,6 +270,13 @@ public class MessageGeneralFactory implements GeneralMessageHelper,
         ReliableMessage.Factory factory = getReliableMessageFactory();
         assert factory != null : "reliable message factory not ready: " + msg;
         return factory.parseReliableMessage(info);
+    }
+
+    @Override
+    public ReliableMessage createReliableMessage(SecureMessage sMsg, byte[] signature) {
+        ReliableMessage.Factory factory = getReliableMessageFactory();
+        assert factory != null : "reliable message factory not ready: " + sMsg;
+        return factory.createReliableMessage(sMsg, signature);
     }
 
 }

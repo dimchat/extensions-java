@@ -30,7 +30,7 @@
  */
 package chat.dim.protocol;
 
-import chat.dim.ext.GeneralCommandHelper;
+import chat.dim.ext.CmdHelper;
 import chat.dim.ext.SharedCommandExtensions;
 
 /**
@@ -72,7 +72,7 @@ public interface ReceiptCommand extends Command {
      *  Create base receipt command with text &amp; original message info
      */
     static ReceiptCommand create(String text, Envelope head, Content body) {
-        GeneralCommandHelper helper = SharedCommandExtensions.helper;
+        CmdHelper helper = SharedCommandExtensions.helper;
         Command content = helper.createReceipt(text, head, body);
         if (content instanceof ReceiptCommand) {
             return  (ReceiptCommand) content;

@@ -30,9 +30,9 @@
  */
 package chat.dim;
 
-import chat.dim.ext.AccountGeneralFactory;
-import chat.dim.ext.CommandGeneralFactory;
-import chat.dim.ext.MessageGeneralFactory;
+import chat.dim.ext.GeneralAccountHelper;
+import chat.dim.ext.GeneralCommandHelper;
+import chat.dim.ext.GeneralMessageHelper;
 import chat.dim.ext.SharedAccountExtensions;
 import chat.dim.ext.SharedCommandExtensions;
 import chat.dim.ext.SharedMessageExtensions;
@@ -45,7 +45,7 @@ public interface CoreExtensions {
     default void registerAccountHelpers() {
 
         // mkm
-        AccountGeneralFactory accountHelper = new AccountGeneralFactory();
+        GeneralAccountHelper accountHelper = new GeneralAccountHelper();
         SharedAccountExtensions.addressHelper = accountHelper;
         SharedAccountExtensions.idHelper      = accountHelper;
         SharedAccountExtensions.metaHelper    = accountHelper;
@@ -58,7 +58,7 @@ public interface CoreExtensions {
     default void registerMessageHelpers() {
 
         // dkd
-        MessageGeneralFactory msgHelper = new MessageGeneralFactory();
+        GeneralMessageHelper msgHelper = new GeneralMessageHelper();
         SharedMessageExtensions.contentHelper  = msgHelper;
         SharedMessageExtensions.envelopeHelper = msgHelper;
         SharedMessageExtensions.instantHelper  = msgHelper;
@@ -72,9 +72,9 @@ public interface CoreExtensions {
     default void registerCommandHelpers() {
 
         // cmd
-        CommandGeneralFactory cmdHelper = new CommandGeneralFactory();
-        SharedCommandExtensions.cmdHelper = cmdHelper;
-        SharedCommandExtensions.helper    = cmdHelper;
+        GeneralCommandHelper cmdHelper = new GeneralCommandHelper();
+        SharedCommandExtensions.commandHelper = cmdHelper;
+        SharedCommandExtensions.helper        = cmdHelper;
 
     }
 

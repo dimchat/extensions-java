@@ -32,8 +32,8 @@ package chat.dim.dkd;
 
 import java.util.Map;
 
+import chat.dim.ext.CmdHelper;
 import chat.dim.ext.CommandHelper;
-import chat.dim.ext.GeneralCommandHelper;
 import chat.dim.ext.SharedCommandExtensions;
 import chat.dim.protocol.Command;
 import chat.dim.protocol.Content;
@@ -45,8 +45,8 @@ public class GeneralCommandFactory implements Content.Factory, Command.Factory {
 
     @Override
     public Content parseContent(Map<String, Object> content) {
-        GeneralCommandHelper helper = SharedCommandExtensions.helper;
-        CommandHelper cmdHelper = SharedCommandExtensions.cmdHelper;
+        CmdHelper helper = SharedCommandExtensions.helper;
+        CommandHelper cmdHelper = SharedCommandExtensions.commandHelper;
         // get factory by command name
         String cmd = helper.getCmd(content, null);
         Command.Factory factory = cmd == null ? null : cmdHelper.getCommandFactory(cmd);
