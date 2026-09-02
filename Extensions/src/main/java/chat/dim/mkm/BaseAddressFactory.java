@@ -32,21 +32,11 @@ package chat.dim.mkm;
 
 import chat.dim.mem.SharedAccountCache;
 import chat.dim.protocol.Address;
-import chat.dim.protocol.Meta;
 
 /**
  *  Base Address Factory
  */
 public class BaseAddressFactory implements Address.Factory {
-
-    @Override
-    public Address generateAddress(Meta meta, int network) {
-        Address address = meta.generateAddress(network);
-        if (address != null) {
-            SharedAccountCache.addressCache.put(address.toString(), address);
-        }
-        return address;
-    }
 
     @Override
     public Address parseAddress(String address) {

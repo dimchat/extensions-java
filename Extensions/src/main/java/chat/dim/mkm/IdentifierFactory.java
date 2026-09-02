@@ -33,19 +33,11 @@ package chat.dim.mkm;
 import chat.dim.mem.SharedAccountCache;
 import chat.dim.protocol.Address;
 import chat.dim.protocol.ID;
-import chat.dim.protocol.Meta;
 
 /**
  *  General ID Factory
  */
 public class IdentifierFactory implements ID.Factory {
-
-    @Override
-    public ID generateID(Meta meta, int network) {
-        Address address = Address.generate(meta, network);
-        assert address != null : "failed to generate ID with meta: " + meta.toMap();
-        return ID.create(meta.getSeed(), address, null);
-    }
 
     @Override
     public ID createID(String name, Address address, String terminal) {
