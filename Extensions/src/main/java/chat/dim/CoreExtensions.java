@@ -50,7 +50,7 @@ public interface CoreExtensions {
         SharedAccountExtensions.idHelper      = accountHelper;
         SharedAccountExtensions.metaHelper    = accountHelper;
         SharedAccountExtensions.docHelper     = accountHelper;
-        SharedAccountExtensions.helper        = accountHelper;
+        SharedAccountExtensions.handler       = accountHelper;
 
     }
 
@@ -64,7 +64,7 @@ public interface CoreExtensions {
         SharedMessageExtensions.instantHelper  = msgHelper;
         SharedMessageExtensions.secureHelper   = msgHelper;
         SharedMessageExtensions.reliableHelper = msgHelper;
-        SharedMessageExtensions.helper         = msgHelper;
+        SharedMessageExtensions.handler        = msgHelper;
 
     }
 
@@ -74,7 +74,7 @@ public interface CoreExtensions {
         // cmd
         GeneralCommandHelper cmdHelper = new GeneralCommandHelper();
         SharedCommandExtensions.commandHelper = cmdHelper;
-        SharedCommandExtensions.helper        = cmdHelper;
+        SharedCommandExtensions.handler       = cmdHelper;
 
     }
 

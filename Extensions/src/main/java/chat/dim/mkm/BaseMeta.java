@@ -33,6 +33,7 @@ package chat.dim.mkm;
 import java.util.HashMap;
 import java.util.Map;
 
+import chat.dim.ext.AccountHandler;
 import chat.dim.ext.SharedAccountExtensions;
 import chat.dim.format.UTF8;
 import chat.dim.mem.SharedAccountCache;
@@ -147,7 +148,8 @@ public abstract class BaseMeta extends Dictionary implements Meta {
     @Override
     public String getType() {
         if (type == null) {
-            type = SharedAccountExtensions.helper.getMetaType(toMap(), "");
+            AccountHandler helper = SharedAccountExtensions.handler;
+            type = helper.getMetaType(toMap(), "");
             // type = getInt("type", 0);
             assert type != null : "meta.type not found: " + toMap();
         }

@@ -34,7 +34,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import chat.dim.crypto.EncryptedBundle;
+import chat.dim.dkd.EncryptedBundle;
 import chat.dim.data.Converter;
 import chat.dim.data.Wrapper;
 import chat.dim.protocol.Content;
@@ -48,7 +48,7 @@ import chat.dim.protocol.SecureMessage;
 /**
  *  Message GeneralHelper
  */
-public class GeneralMessageHelper implements MessageHelper,
+public class GeneralMessageHelper implements MessageHandler,
                                              ContentHelper, EnvelopeHelper,
                                              InstantMessageHelper, SecureMessageHelper, ReliableMessageHelper {
 
@@ -79,6 +79,15 @@ public class GeneralMessageHelper implements MessageHelper,
         return group != null && group.isBroadcast();
     }
 
+    /// Get a mutable map from an object.
+    ///
+    /// [dict] is a raw map or a mapping instance;
+    /// returns null if it cannot be converted.
+    // protected
+    protected Map<String, Object> getMap(Object dict) {
+        return Wrapper.getMap(dict);
+    }
+
     //
     //  Content Helper
     //
@@ -100,7 +109,7 @@ public class GeneralMessageHelper implements MessageHelper,
         } else if (content instanceof Content) {
             return (Content) content;
         }
-        Map<String, Object> info = Wrapper.getMap(content);
+        Map<String, Object> info = getMap(content);
         if (info == null) {
             assert false : "content error: " + content;
             return null;
@@ -148,7 +157,7 @@ public class GeneralMessageHelper implements MessageHelper,
         } else if (env instanceof Envelope) {
             return (Envelope) env;
         }
-        Map<String, Object> info = Wrapper.getMap(env);
+        Map<String, Object> info = getMap(env);
         if (info == null) {
             assert false : "envelope error: " + env;
             return null;
@@ -186,7 +195,7 @@ public class GeneralMessageHelper implements MessageHelper,
         } else if (msg instanceof InstantMessage) {
             return (InstantMessage) msg;
         }
-        Map<String, Object> info = Wrapper.getMap(msg);
+        Map<String, Object> info = getMap(msg);
         if (info == null) {
             assert false : "instant message error: " + msg;
             return null;
@@ -224,7 +233,7 @@ public class GeneralMessageHelper implements MessageHelper,
         } else if (msg instanceof SecureMessage) {
             return (SecureMessage) msg;
         }
-        Map<String, Object> info = Wrapper.getMap(msg);
+        Map<String, Object> info = getMap(msg);
         if (info == null) {
             assert false : "secure message error: " + msg;
             return null;
@@ -262,7 +271,7 @@ public class GeneralMessageHelper implements MessageHelper,
         } else if (msg instanceof ReliableMessage) {
             return (ReliableMessage) msg;
         }
-        Map<String, Object> info = Wrapper.getMap(msg);
+        Map<String, Object> info = getMap(msg);
         if (info == null) {
             assert false : "reliable message error: " + msg;
             return null;

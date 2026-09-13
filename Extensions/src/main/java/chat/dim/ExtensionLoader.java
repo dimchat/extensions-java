@@ -41,18 +41,18 @@ public class ExtensionLoader implements CoreExtensions, EntityExtensions, Messag
      */
     public void load() {
 
-        loadCoreHelpers();
+        loadCoreExtensions();
 
-        loadEntityFactories();
+        loadEntityExtensions();
 
-        loadMessageFactories();
+        loadMessageExtensions();
 
     }
 
     /**
      *  Core extensions
      */
-    protected void loadCoreHelpers() {
+    protected void loadCoreExtensions() {
 
         registerAccountHelpers();
 
@@ -64,7 +64,7 @@ public class ExtensionLoader implements CoreExtensions, EntityExtensions, Messag
     /**
      *  ID, Address, Meta, Document parsers
      */
-    protected void loadEntityFactories() {
+    protected void loadEntityExtensions() {
 
         registerIDFactory();
         registerAddressFactory();
@@ -78,7 +78,7 @@ public class ExtensionLoader implements CoreExtensions, EntityExtensions, Messag
     /**
      *  Message Factories
      */
-    protected void loadMessageFactories() {
+    protected void loadMessageExtensions() {
 
         registerMessageFactories();
 

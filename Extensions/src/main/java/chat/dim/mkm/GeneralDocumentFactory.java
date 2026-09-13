@@ -32,6 +32,7 @@ package chat.dim.mkm;
 
 import java.util.Map;
 
+import chat.dim.ext.AccountHandler;
 import chat.dim.ext.SharedAccountExtensions;
 import chat.dim.protocol.Document;
 import chat.dim.protocol.DocumentType;
@@ -116,9 +117,10 @@ public class GeneralDocumentFactory implements Document.Factory {
         //    return null;
         }
 
+        AccountHandler helper = SharedAccountExtensions.handler;
         // create document for type
         Document out;
-        String docType = SharedAccountExtensions.helper.getDocumentType(info, null);
+        String docType = helper.getDocumentType(info, null);
         switch (docType) {
 
             case DocumentType.VISA:

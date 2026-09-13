@@ -34,10 +34,21 @@ public interface MemoryCache <K, V> {
 
     V get(K key);
 
+    /**
+     * @param value is the value to cache (null = remove the key from cache)
+     * @return the previous value associated with the key (null if none)
+     */
     V put(K key, V value);
 
     /**
+     * @return current number of entries in the cache
+     */
+    int size();
+
+    /**
      *  Garbage Collection
+     *
+     * @return number of entries remaining in the cache after reduction
      */
     int reduceMemory();
 

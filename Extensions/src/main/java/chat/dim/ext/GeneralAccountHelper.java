@@ -47,7 +47,7 @@ import chat.dim.protocol.VerifyKey;
 /**
  *  Account GeneralHelper
  */
-public class GeneralAccountHelper implements AccountHelper,
+public class GeneralAccountHelper implements AccountHandler,
                                              AddressHelper, IDHelper,
                                              MetaHelper, DocumentHelper {
 
@@ -67,7 +67,7 @@ public class GeneralAccountHelper implements AccountHelper,
     @Override
     public String getDocumentType(Map<?, ?> doc, String defaultValue) {
         String type = Converter.getString(doc.get("type"), null);
-        if (type != null && type.length() > 0 && !type.equals("*")) {
+        if (type != null && type.length() > 0/* && !type.equals("*")*/) {
             return type;
         } else if (defaultValue != null) {
             return defaultValue;
@@ -91,6 +91,24 @@ public class GeneralAccountHelper implements AccountHelper,
         return ID.parse(doc.get("did"));
     }
 
+    /// Get a mutable map from an object.
+    ///
+    /// [dict] is a raw map or a mapping instance;
+    /// returns null if it cannot be converted.
+    // protected
+    protected Map<String, Object> getMap(Object dict) {
+        return Wrapper.getMap(dict);
+    }
+
+    /// Get a string value from an object.
+    ///
+    /// [str] is any object; returns its string form, or '' if null.
+    // protected
+    protected String getString(Object str) {
+        String text = Wrapper.getString(str);
+        return text == null ? "" : text;
+    }
+
     //
     //  Address Helper
     //
@@ -112,14 +130,14 @@ public class GeneralAccountHelper implements AccountHelper,
         } else if (address instanceof Address) {
             return (Address) address;
         }
-        String str = Wrapper.getString(address);
-        if (str == null) {
+        String text = getString(address);
+        if (text.isEmpty()) {
             assert false : "address error: " + address;
             return null;
         }
         Address.Factory factory = getAddressFactory();
         assert factory != null : "address factory not ready";
-        return factory.parseAddress(str);
+        return factory.parseAddress(text);
     }
 
     //
@@ -143,14 +161,14 @@ public class GeneralAccountHelper implements AccountHelper,
         } else if (did instanceof ID) {
             return (ID) did;
         }
-        String str = Wrapper.getString(did);
-        if (str == null) {
+        String text = getString(did);
+        if (text.isEmpty()) {
             assert false : "ID error: " + did;
             return null;
         }
         ID.Factory factory = getIDFactory();
         assert factory != null : "ID factory not ready";
-        return factory.parseID(str);
+        return factory.parseID(text);
     }
 
     @Override
@@ -177,14 +195,14 @@ public class GeneralAccountHelper implements AccountHelper,
     @Override
     public Meta createMeta(String type, VerifyKey key, String seed, TransportableData fingerprint) {
         Meta.Factory factory = getMetaFactory(type);
-        assert factory != null : "meta type not found: " + type;
+        assert factory != null : "meta type not supported: " + type;
         return factory.createMeta(key, seed, fingerprint);
     }
 
     @Override
     public Meta generateMeta(String type, SignKey sKey, String seed) {
         Meta.Factory factory = getMetaFactory(type);
-        assert factory != null : "meta type not found: " + type;
+        assert factory != null : "meta type not supported: " + type;
         return factory.generateMeta(sKey, seed);
     }
 
@@ -195,7 +213,7 @@ public class GeneralAccountHelper implements AccountHelper,
         } else if (meta instanceof Meta) {
             return (Meta) meta;
         }
-        Map<String, Object> info = Wrapper.getMap(meta);
+        Map<String, Object> info = getMap(meta);
         if (info == null) {
             assert false : "meta error: " + meta;
             return null;
@@ -242,7 +260,7 @@ public class GeneralAccountHelper implements AccountHelper,
         } else if (doc instanceof Document) {
             return (Document) doc;
         }
-        Map<String, Object> info = Wrapper.getMap(doc);
+        Map<String, Object> info = getMap(doc);
         if (info == null) {
             assert false : "document error: " + doc;
             return null;

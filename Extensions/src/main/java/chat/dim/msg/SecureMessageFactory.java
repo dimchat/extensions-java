@@ -33,7 +33,8 @@ package chat.dim.msg;
 import java.util.HashMap;
 import java.util.Map;
 
-import chat.dim.crypto.EncryptedBundle;
+import chat.dim.dkd.EncryptedBundle;
+import chat.dim.ext.MessageHandler;
 import chat.dim.ext.SharedMessageExtensions;
 import chat.dim.format.PlainData;
 import chat.dim.protocol.ID;
@@ -48,11 +49,12 @@ public class SecureMessageFactory implements SecureMessage.Factory {
 
     @Override
     public SecureMessage createSecureMessage(InstantMessage iMsg, byte[] ciphertext, Map<ID, EncryptedBundle> keyBundles) {
+        MessageHandler helper = SharedMessageExtensions.handler;
         //
         //  1. encode ciphertext
         //
         TransportableData encodedData;
-        if (SharedMessageExtensions.helper.isBroadcast(iMsg)) {
+        if (helper.isBroadcast(iMsg)) {
             // broadcast message content will not be encrypted (just encoded to JsON),
             // so no need to encode to Base64 here
             encodedData = PlainData.create(ciphertext);  // UTF8.decode(ciphertext);
@@ -70,7 +72,7 @@ public class SecureMessageFactory implements SecureMessage.Factory {
             msgKeys = null;
         } else {
             msgKeys = new HashMap<>();
-            assert !SharedMessageExtensions.helper.isBroadcast(iMsg) : "broadcast message should not contains keys: " + iMsg;
+            assert !helper.isBroadcast(iMsg) : "broadcast message should not contains keys: " + iMsg;
             // message key had been encrypted by a public key,
             // so the data should be encoded here (with algorithm 'base64' as default).
             ID receiver;
@@ -107,14 +109,14 @@ public class SecureMessageFactory implements SecureMessage.Factory {
     @Override
     public SecureMessage parseSecureMessage(Map<String, Object> msg) {
         // check 'sender', 'data'
-        if (msg.get("sender") == null || msg.get("data") == null) {
+        if (!msg.containsKey("sender") || !msg.containsKey("data")) {
             // msg.sender should not be empty
             // msg.data should not be empty
             assert false : "message error: " + msg;
             return null;
         }
         // check 'signature'
-        if (msg.get("signature") != null) {
+        if (msg.containsKey("signature")) {
             return new NetworkMessage(msg);
         }
         return new EncryptedMessage(msg);

@@ -47,7 +47,9 @@ public class InstantMessageFactory implements InstantMessage.Factory {
 
     public InstantMessageFactory() {
         super();
-        Random random = new Random();
+        // random seed: microseconds since epoch
+        Random random = new Random(System.currentTimeMillis() * 1000);
+        //sn = random.nextInt(0x80000000);  //    0 ~ 0x7fffffff
         int r = random.nextInt();    // -0x80000000 ~ 0x7fffffff
         sn = r >= 0 ? r : -(r + 1);  //           0 ~ 0x7fffffff
     }
@@ -83,7 +85,7 @@ public class InstantMessageFactory implements InstantMessage.Factory {
     @Override
     public InstantMessage parseInstantMessage(Map<String, Object> msg) {
         // check 'sender', 'content'
-        if (msg.get("sender") == null || msg.get("content") == null) {
+        if (!msg.containsKey("sender") || !msg.containsKey("content")) {
             // msg.sender should not be empty
             // msg.content should not be empty
             assert false : "message error: " + msg;

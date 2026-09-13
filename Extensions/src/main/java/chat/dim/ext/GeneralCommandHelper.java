@@ -45,7 +45,7 @@ import chat.dim.protocol.ReceiptCommand;
 /**
  *  Command GeneralHelper
  */
-public class GeneralCommandHelper implements CmdHelper, CommandHelper {
+public class GeneralCommandHelper implements CommandHandler, CommandHelper {
 
     private final Map<String, Command.Factory> commandFactories = new HashMap<>();
 
@@ -83,6 +83,15 @@ public class GeneralCommandHelper implements CmdHelper, CommandHelper {
         return content;
     }
 
+    /// Get a mutable map from an object.
+    ///
+    /// [dict] is a raw map or a mapping instance;
+    /// returns null if it cannot be converted.
+    // protected
+    protected Map<String, Object> getMap(Object dict) {
+        return Wrapper.getMap(dict);
+    }
+
     //
     //  Command Helper
     //
@@ -104,7 +113,7 @@ public class GeneralCommandHelper implements CmdHelper, CommandHelper {
         } else if (content instanceof Command) {
             return (Command) content;
         }
-        Map<String, Object> info = Wrapper.getMap(content);
+        Map<String, Object> info = getMap(content);
         if (info == null) {
             assert false : "command error: " + content;
             return null;
@@ -125,12 +134,12 @@ public class GeneralCommandHelper implements CmdHelper, CommandHelper {
     }
 
     private static Command.Factory getDefaultFactory(Map<?, ?> info) {
-        MessageHelper helper = SharedMessageExtensions.helper;
-        ContentHelper contentHelper = SharedMessageExtensions.contentHelper;
+        MessageHandler handler = SharedMessageExtensions.handler;
+        ContentHelper helper = SharedMessageExtensions.contentHelper;
         // get factory by content type
-        String type = helper.getContentType(info, null);
+        String type = handler.getContentType(info, null);
         if (type != null) {
-            Content.Factory factory = contentHelper.getContentFactory(type);
+            Content.Factory factory = helper.getContentFactory(type);
             if (factory instanceof Command.Factory) {
                 return (Command.Factory) factory;
             }

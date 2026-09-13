@@ -32,6 +32,7 @@ package chat.dim.mkm;
 
 import chat.dim.digest.KECCAK256;
 import chat.dim.format.Hex;
+import chat.dim.format.UTF8;
 import chat.dim.protocol.Address;
 import chat.dim.protocol.EntityType;
 import chat.dim.type.ConstantString;
@@ -63,7 +64,7 @@ public final class ETHAddress extends ConstantString implements Address {
     // https://eips.ethereum.org/EIPS/eip-55
     private static String eip55(String hex) {
         StringBuilder sb = new StringBuilder();
-        byte[] hash = KECCAK256.digest(hex.getBytes());
+        byte[] hash = KECCAK256.digest(UTF8.encode(hex));
         char ch;
         for (int i = 0; i < 40; ++i) {
             ch = hex.charAt(i);

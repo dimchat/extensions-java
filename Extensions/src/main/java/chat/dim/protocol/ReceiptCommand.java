@@ -30,7 +30,7 @@
  */
 package chat.dim.protocol;
 
-import chat.dim.ext.CmdHelper;
+import chat.dim.ext.CommandHandler;
 import chat.dim.ext.SharedCommandExtensions;
 
 /**
@@ -39,7 +39,7 @@ import chat.dim.ext.SharedCommandExtensions;
  *  <blockquote><pre>
  *  data format: {
  *      "type" : i2s(0x88),
- *      "sn"   : 456,
+ *      "sn"   : 67890,
  *
  *      "command" : "receipt",
  *      "text"    : "...",  // text message
@@ -48,7 +48,7 @@ import chat.dim.ext.SharedCommandExtensions;
  *          "receiver"  : "...",
  *          "time"      : 0,
  *
- *          "sn"        : 123,
+ *          "sn"        : 12345,
  *          "signature" : "..."
  *      }
  *  }
@@ -72,7 +72,7 @@ public interface ReceiptCommand extends Command {
      *  Create base receipt command with text &amp; original message info
      */
     static ReceiptCommand create(String text, Envelope head, Content body) {
-        CmdHelper helper = SharedCommandExtensions.helper;
+        CommandHandler helper = SharedCommandExtensions.handler;
         Command content = helper.createReceipt(text, head, body);
         if (content instanceof ReceiptCommand) {
             return  (ReceiptCommand) content;

@@ -38,9 +38,17 @@ public final class SharedAccountCache {
         throw new AssertionError("Utility class cannot be instantiated");
     }
 
-    public static final MemoryCache<String, Address> addressCache = new ThanosCache<>();
+    public static MemoryCache<String, Address> addressCache = new ThanosCache<>();
 
-    public static final MemoryCache<String, ID> idCache = new ThanosCache<>();
+    public static MemoryCache<String, ID> idCache = new ThanosCache<>();
+
+    public static void setAddressCache(MemoryCache<String, Address> cache) {
+        addressCache = cache;
+    }
+
+    public static void setIdCache(MemoryCache<String, ID> cache) {
+        idCache = cache;
+    }
 
     /**
      * Call it when received 'UIApplicationDidReceiveMemoryWarningNotification',

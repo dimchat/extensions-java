@@ -71,7 +71,7 @@ public class IdentifierFactory implements ID.Factory {
         // split for "terminal"
         String[] pair = identifier.split("/");
         int cnt = pair.length;
-        String terminal = cnt == 1 ? null : pair[1];
+        String terminal = cnt == 1 ? null : pair[cnt - 1];
         // split for "name" @ "address"
         pair = pair[0].split("@");
         cnt = pair.length;

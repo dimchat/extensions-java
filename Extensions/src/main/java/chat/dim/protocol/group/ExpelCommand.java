@@ -30,6 +30,24 @@
  */
 package chat.dim.protocol.group;
 
+
+/**
+ *  Group history command: {
+ *      "type" : i2s(0x89),
+ *      "sn"   : 12345,
+ *
+ *      "time"    : 123.45,
+ *      "command" : "expel",
+ *
+ *      "group"   : "{GROUP_ID}",
+ *      "members" : [],
+ *
+ *      "text"    : "Go away!",
+ *  }
+ */
 public interface ExpelCommand extends GroupCommand {
     // Deprecated (use 'reset' instead)
+
+    String getAway();
+
 }

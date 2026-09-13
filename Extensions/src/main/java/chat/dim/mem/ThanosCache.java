@@ -45,7 +45,16 @@ public class ThanosCache <K, V> implements MemoryCache<K, V> {
 
     @Override
     public V put(K key, V value) {
+        if (value == null) {
+            // null value = remove key from cache
+            return caches.remove(key);
+        }
         return caches.put(key, value);
+    }
+
+    @Override
+    public int size() {
+        return caches.size();
     }
 
     @Override

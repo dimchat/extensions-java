@@ -60,7 +60,7 @@ public class ReliableMessageFactory implements ReliableMessage.Factory {
     @Override
     public ReliableMessage parseReliableMessage(Map<String, Object> msg) {
         // check 'sender', 'data', 'signature'
-        if (msg.get("sender") == null || msg.get("data") == null || msg.get("signature") == null) {
+        if (!msg.containsKey("sender") || !msg.containsKey("data") || !msg.containsKey("signature")) {
             // msg.sender should not be empty
             // msg.data should not be empty
             // msg.signature should not be empty

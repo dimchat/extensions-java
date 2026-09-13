@@ -40,7 +40,7 @@ import chat.dim.dkd.WebPageContent;
  *  <blockquote><pre>
  *  data format: {
  *      "type" : i2s(0x20),
- *      "sn"   : 123,
+ *      "sn"   : 12345,
  *
  *      "title" : "...",                // Web title
  *      "desc"  : "...",
@@ -76,11 +76,11 @@ public interface PageContent extends Content {
     //  Factories
     //
 
-    static PageContent createWithURL(URI url, String title, TransportableFile icon, String desc) {
+    static PageContent createFromURL(URI url, String title, TransportableFile icon, String desc) {
         return new WebPageContent(title, icon, desc, url, null);
     }
 
-    static PageContent createWithHTML(String html, String title, TransportableFile icon, String desc) {
+    static PageContent createFromHTML(String html, String title, TransportableFile icon, String desc) {
         return new WebPageContent(title, icon, desc, null, html);
     }
 

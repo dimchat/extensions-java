@@ -37,6 +37,7 @@ import chat.dim.protocol.ID;
 import chat.dim.protocol.group.GroupCommand;
 import chat.dim.protocol.group.InviteCommand;
 
+
 public class InviteGroupCommand extends BaseGroupCommand implements InviteCommand {
 
     public InviteGroupCommand(Map<String, Object> content) {
@@ -46,4 +47,10 @@ public class InviteGroupCommand extends BaseGroupCommand implements InviteComman
     public InviteGroupCommand(ID group, List<ID> members) {
         super(GroupCommand.INVITE, group, members);
     }
+
+    @Override
+    public String getWelcome() {
+        return getString("text");
+    }
+
 }

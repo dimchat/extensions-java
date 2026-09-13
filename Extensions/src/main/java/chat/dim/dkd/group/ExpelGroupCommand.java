@@ -37,6 +37,7 @@ import chat.dim.protocol.ID;
 import chat.dim.protocol.group.ExpelCommand;
 import chat.dim.protocol.group.GroupCommand;
 
+
 /**
  *  Deprecated, use 'reset' instead
  */
@@ -49,4 +50,10 @@ public class ExpelGroupCommand extends BaseGroupCommand implements ExpelCommand 
     public ExpelGroupCommand(ID group, List<ID> members) {
         super(GroupCommand.EXPEL, group, members);
     }
+
+    @Override
+    public String getAway() {
+        return getString("text");
+    }
+
 }

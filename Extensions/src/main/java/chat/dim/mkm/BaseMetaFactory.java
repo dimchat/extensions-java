@@ -32,6 +32,7 @@ package chat.dim.mkm;
 
 import java.util.Map;
 
+import chat.dim.ext.AccountHandler;
 import chat.dim.ext.SharedAccountExtensions;
 import chat.dim.format.UTF8;
 import chat.dim.protocol.Meta;
@@ -110,9 +111,10 @@ public class BaseMetaFactory implements Meta.Factory {
             return null;
         }
 
+        AccountHandler helper = SharedAccountExtensions.handler;
         // create meta for type
         Meta out;
-        String version = SharedAccountExtensions.helper.getMetaType(info, "");
+        String version = helper.getMetaType(info, "");
         switch (version) {
 
             case MetaType.MKM:
