@@ -28,7 +28,7 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim.dkd;
+package chat.dim.msg;
 
 import java.util.Map;
 
@@ -39,6 +39,12 @@ import chat.dim.ext.SharedCommandExtensions;
 import chat.dim.protocol.Command;
 import chat.dim.protocol.Content;
 
+/**
+ * Group command factory.
+ *
+ * Creates group commands, dispatching by the group command name
+ * (invite/expel/join/quit/reset/...).
+ */
 public class GroupCommandFactory extends HistoryCommandFactory {
 
     @Override
@@ -61,7 +67,7 @@ public class GroupCommandFactory extends HistoryCommandFactory {
             // content.sn should not be empty
             // content.command should not be empty
             // content.group should not be empty
-            assert false : "command error: " + content;
+            assert false : "group command error: " + content;
             return null;
         }
         return new BaseGroupCommand(content);

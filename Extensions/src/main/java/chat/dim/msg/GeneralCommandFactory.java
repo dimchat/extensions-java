@@ -28,25 +28,50 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim.dkd;
+package chat.dim.msg;
 
 import java.util.Map;
 
-import chat.dim.dkd.cmd.BaseHistoryCommand;
+import chat.dim.dkd.BaseCommand;
+import chat.dim.ext.CommandHandler;
+import chat.dim.ext.CommandHelper;
+import chat.dim.ext.SharedCommandExtensions;
 import chat.dim.protocol.Command;
+import chat.dim.protocol.Content;
 
-public class HistoryCommandFactory extends GeneralCommandFactory {
+/**
+ *  General Command Factory
+ */
+public class GeneralCommandFactory implements Content.Factory, Command.Factory {
+
+    @Override
+    public Content parseContent(Map<String, Object> content) {
+        CommandHandler handler = SharedCommandExtensions.handler;
+        CommandHelper helper = SharedCommandExtensions.commandHelper;
+        // get factory by command name
+        String cmd = handler.getCmd(content, null);
+        Command.Factory factory = cmd == null ? null : helper.getCommandFactory(cmd);
+        if (factory == null) {
+            // check for group command
+            if (content.containsKey("group")/* && !cmd.equals("group")*/) {
+                factory = helper.getCommandFactory("group");
+            }
+            if (factory == null) {
+                factory = this;
+            }
+        }
+        return factory.parseCommand(content);
+    }
 
     @Override
     public Command parseCommand(Map<String, Object> content) {
-        // check 'sn', 'command', 'time'
-        if (content.get("sn") == null || content.get("command") == null || content.get("time") == null) {
+        // check 'sn', 'command'
+        if (content.get("sn") == null || content.get("command") == null) {
             // content.sn should not be empty
             // content.command should not be empty
-            // content.time should not be empty
             assert false : "command error: " + content;
             return null;
         }
-        return new BaseHistoryCommand(content);
+        return new BaseCommand(content);
     }
 }

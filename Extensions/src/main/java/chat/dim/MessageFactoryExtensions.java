@@ -34,9 +34,6 @@ import chat.dim.dkd.BaseContent;
 import chat.dim.dkd.BaseQuoteContent;
 import chat.dim.dkd.BaseTextContent;
 import chat.dim.dkd.CombineForwardContent;
-import chat.dim.dkd.GeneralCommandFactory;
-import chat.dim.dkd.GroupCommandFactory;
-import chat.dim.dkd.HistoryCommandFactory;
 import chat.dim.dkd.ListContent;
 import chat.dim.dkd.NameCardContent;
 import chat.dim.dkd.SecretContent;
@@ -55,10 +52,15 @@ import chat.dim.dkd.group.InviteGroupCommand;
 import chat.dim.dkd.group.JoinGroupCommand;
 import chat.dim.dkd.group.QuitGroupCommand;
 import chat.dim.dkd.group.ResetGroupCommand;
+
+import chat.dim.msg.GeneralCommandFactory;
+import chat.dim.msg.GroupCommandFactory;
+import chat.dim.msg.HistoryCommandFactory;
 import chat.dim.msg.EnvelopeFactory;
 import chat.dim.msg.InstantMessageFactory;
 import chat.dim.msg.ReliableMessageFactory;
 import chat.dim.msg.SecureMessageFactory;
+
 import chat.dim.protocol.Command;
 import chat.dim.protocol.Content;
 import chat.dim.protocol.ContentType;
@@ -72,11 +74,19 @@ import chat.dim.protocol.SecureMessage;
 import chat.dim.protocol.group.GroupCommand;
 
 
-// MixIn
+/**
+ * Message factory extensions.
+ *
+ * Registers the default factories for messages, contents, commands
+ * and their subtypes, so that they can be parsed by type automatically.
+ */
 public interface MessageFactoryExtensions {
 
     /**
-     *  Message factories
+     * Register the default message factories.
+     *
+     * Sets the factory implementations for envelope, instant,
+     * secure and reliable messages.
      */
     // protected
     default void registerMessageFactories() {
@@ -92,7 +102,9 @@ public interface MessageFactoryExtensions {
     }
 
     /**
-     *  Core content factories
+     * Register the default content factories.
+     *
+     * Maps each {@link ContentType} to its concrete {@link Content} implementation.
      */
     // protected
     default void registerContentFactories() {
@@ -144,7 +156,9 @@ public interface MessageFactoryExtensions {
     }
 
     /**
-     *  Core command factories
+     * Register the default command factories.
+     *
+     * Maps each command name to its concrete {@link Command} implementation.
      */
     // protected
     default void registerCommandFactories() {

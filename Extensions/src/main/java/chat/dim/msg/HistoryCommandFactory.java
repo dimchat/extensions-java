@@ -28,49 +28,30 @@
  * SOFTWARE.
  * ==============================================================================
  */
-package chat.dim.dkd;
+package chat.dim.msg;
 
 import java.util.Map;
 
-import chat.dim.ext.CommandHandler;
-import chat.dim.ext.CommandHelper;
-import chat.dim.ext.SharedCommandExtensions;
+import chat.dim.dkd.cmd.BaseHistoryCommand;
 import chat.dim.protocol.Command;
-import chat.dim.protocol.Content;
 
 /**
- *  General Command Factory
+ * History command factory.
+ *
+ * Creates history commands (with 'history' parameter).
  */
-public class GeneralCommandFactory implements Content.Factory, Command.Factory {
-
-    @Override
-    public Content parseContent(Map<String, Object> content) {
-        CommandHandler handler = SharedCommandExtensions.handler;
-        CommandHelper helper = SharedCommandExtensions.commandHelper;
-        // get factory by command name
-        String cmd = handler.getCmd(content, null);
-        Command.Factory factory = cmd == null ? null : helper.getCommandFactory(cmd);
-        if (factory == null) {
-            // check for group command
-            if (content.containsKey("group")/* && !cmd.equals("group")*/) {
-                factory = helper.getCommandFactory("group");
-            }
-            if (factory == null) {
-                factory = this;
-            }
-        }
-        return factory.parseCommand(content);
-    }
+public class HistoryCommandFactory extends GeneralCommandFactory {
 
     @Override
     public Command parseCommand(Map<String, Object> content) {
-        // check 'sn', 'command'
-        if (content.get("sn") == null || content.get("command") == null) {
+        // check 'sn', 'command', 'time'
+        if (content.get("sn") == null || content.get("command") == null || content.get("time") == null) {
             // content.sn should not be empty
             // content.command should not be empty
+            // content.time should not be empty
             assert false : "command error: " + content;
             return null;
         }
-        return new BaseCommand(content);
+        return new BaseHistoryCommand(content);
     }
 }
