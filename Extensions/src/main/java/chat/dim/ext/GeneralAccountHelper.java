@@ -45,7 +45,9 @@ import chat.dim.protocol.TransportableData;
 import chat.dim.protocol.VerifyKey;
 
 /**
- *  Account GeneralHelper
+ * General account helper.
+ *
+ * Creates/parses address, ID, meta and document with the registered factories.
  */
 public class GeneralAccountHelper implements AccountHandler,
                                              AddressHelper, IDHelper,
@@ -91,19 +93,22 @@ public class GeneralAccountHelper implements AccountHandler,
         return ID.parse(doc.get("did"));
     }
 
-    /// Get a mutable map from an object.
-    ///
-    /// [dict] is a raw map or a mapping instance;
-    /// returns null if it cannot be converted.
-    // protected
+    /**
+     * Get a mutable map from an object.
+     *
+     * @param dict - a raw map or a mapping instance;
+     * @return null if it cannot be converted.
+     */
     protected Map<String, Object> getMap(Object dict) {
         return Wrapper.getMap(dict);
     }
 
-    /// Get a string value from an object.
-    ///
-    /// [str] is any object; returns its string form, or '' if null.
-    // protected
+    /**
+     * Get a string from an object.
+     *
+     * @param str - any object;
+     * @return its string form, or empty string if null.
+     */
     protected String getString(Object str) {
         String text = Wrapper.getString(str);
         return text == null ? "" : text;

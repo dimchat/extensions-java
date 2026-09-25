@@ -36,26 +36,23 @@ import chat.dim.dkd.BaseCommand;
 import chat.dim.protocol.ContentType;
 import chat.dim.protocol.HistoryCommand;
 
-/**
- *  History Command Content
- *
- *  <blockquote><pre>
- *  data format: {
- *      "type" : i2s(0x89),
- *      "sn"   : 123,
- *
- *      "command" : "...", // command name
- *      "time"    : 0,     // command timestamp
- *      "extra"   : info   // command parameters
- *  }
- *  </pre></blockquote>
- */
+
 public class BaseHistoryCommand extends BaseCommand implements HistoryCommand {
 
+    /**
+     * Create history command with a raw map.
+     *
+     * @param content - raw command map.
+     */
     public BaseHistoryCommand(Map<String, Object> content) {
         super(content);
     }
 
+    /**
+     * Create history command with the given command name.
+     *
+     * @param cmd - command name
+     */
     public BaseHistoryCommand(String cmd) {
         super(ContentType.HISTORY, cmd);
     }

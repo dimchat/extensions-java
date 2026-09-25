@@ -36,23 +36,14 @@ import chat.dim.protocol.ContentType;
 import chat.dim.protocol.ID;
 import chat.dim.protocol.TransferContent;
 
-/**
- *  Transfer Money
- *
- *  <blockquote><pre>
- *  data format: {
- *      "type" : i2s(0x41),
- *      "sn"   : 123,
- *
- *      "currency" : "RMB",    // USD, USDT, ...
- *      "amount"   : 100.00,
- *      "remitter" : "{FROM}", // sender ID
- *      "remittee" : "{TO}"    // receiver ID
- *  }
- *  </pre></blockquote>
- */
+
 public class TransferMoneyContent extends BaseMoneyContent implements TransferContent {
 
+    /**
+     * Create transfer content with a raw map.
+     *
+     * @param content - raw map, usually from network or storage.
+     */
     public TransferMoneyContent(Map<String, Object> content) {
         super(content);
     }

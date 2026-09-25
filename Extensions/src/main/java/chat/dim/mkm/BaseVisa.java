@@ -58,10 +58,16 @@ public class BaseVisa extends BaseDocument implements Visa {
         super(dictionary);
     }
 
+    /**
+     *  Create document with data &amp; signature from local storage
+     */
     public BaseVisa(String data, TransportableData signature) {
         super(DocumentType.VISA, data, signature);
     }
 
+    /**
+     *  Create a new empty visa
+     */
     public BaseVisa() {
         super(DocumentType.VISA);
     }
@@ -76,12 +82,6 @@ public class BaseVisa extends BaseDocument implements Visa {
         setProperty("name", nickname);
     }
 
-    /**
-     *  Public key (used for encryption, can be same with meta.key)
-     *  <p>
-     *      RSA
-     *  </p>
-     */
     @Override
     public EncryptKey getPublicKey() {
         EncryptKey visaKey = key;

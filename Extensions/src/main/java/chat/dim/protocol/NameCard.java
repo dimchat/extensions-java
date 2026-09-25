@@ -38,7 +38,7 @@ import chat.dim.dkd.NameCardContent;
  *  <blockquote><pre>
  *  data format: {
  *      "type" : i2s(0x33),
- *      "sn"   : 123,
+ *      "sn"   : 12345,
  *
  *      "did"    : "{ID}",        // contact's ID
  *      "name"   : "{nickname}",  // contact's name
@@ -49,10 +49,19 @@ import chat.dim.dkd.NameCardContent;
  */
 public interface NameCard extends Content {
 
+    /**
+     *  Contact identifier.
+     */
     ID getIdentifier();
 
+    /**
+     *  Contact name or nickname.
+     */
     String getName();
 
+    /**
+     *  Contact avatar image.
+     */
     TransportableFile getAvatar();
 
     //

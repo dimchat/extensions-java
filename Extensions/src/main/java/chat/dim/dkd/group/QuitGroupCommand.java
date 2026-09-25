@@ -37,24 +37,22 @@ import chat.dim.protocol.group.GroupCommand;
 import chat.dim.protocol.group.QuitCommand;
 
 
-/**
- *  Group history command: {
- *      "type" : i2s(0x89),
- *      "sn"   : 123,
- *
- *      "command" : "quit",
- *      "time"    : 123.456,
- *
- *      "group"   : "{GROUP_ID}",
- *      "text"    : "Good bye!",
- *  }
- */
 public class QuitGroupCommand extends BaseGroupCommand implements QuitCommand {
 
+    /**
+     * Create quit command with a raw map.
+     *
+     * @param content - raw command map.
+     */
     public QuitGroupCommand(Map<String, Object> content) {
         super(content);
     }
 
+    /**
+     * Create quit command with the given group.
+     *
+     * @param group - the group ID
+     */
     public QuitGroupCommand(ID group) {
         super(GroupCommand.QUIT, group);
     }

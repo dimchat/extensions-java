@@ -31,6 +31,11 @@
 package chat.dim.protocol.group;
 
 /**
+ *  Group reset command interface.
+ *
+ *  Used to record the history of resetting the full list of group members,
+ *  replacing deprecated commands like EXPEL and QUERY.
+ *
  *  Reset Group History
  *
  *  <blockquote><pre>
@@ -50,6 +55,9 @@ package chat.dim.protocol.group;
  */
 public interface ResetCommand extends GroupCommand {
 
+    /**
+     *  The confirmation text sent with the reset command.
+     */
     String getConfirm();
 
 }

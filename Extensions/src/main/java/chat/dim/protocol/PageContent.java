@@ -57,18 +57,33 @@ import chat.dim.dkd.WebPageContent;
  */
 public interface PageContent extends Content {
 
+    /**
+     *  Web page title.
+     */
     void setTitle(String text);
     String getTitle();
 
+    /**
+     *  Web icon, usually base64.
+     */
     void setIcon(TransportableFile img);
     TransportableFile getIcon();
 
+    /**
+     *  Web page description.
+     */
     void setDesc(String text);
     String getDesc();
 
+    /**
+     *  Web page URL.
+     */
     void setURL(URI url);
     URI getURL();
 
+    /**
+     *  Web page HTML content.
+     */
     void setHTML(String html);
     String getHTML();
 

@@ -136,7 +136,7 @@ public final class UnknownAddress extends ConstantString implements Address {
 import java.util.Map;
 
 import chat.dim.mkm.*;
-import chat.dim.ext.SharedAccountExtensions;
+import chat.dim.ext.*;
 import chat.dim.protocol.Meta;
 
 public final class CompatibleMetaFactory extends BaseMetaFactory {
@@ -148,8 +148,8 @@ public final class CompatibleMetaFactory extends BaseMetaFactory {
     @Override
     public Meta parseMeta(Map<String, Object> meta) {
         Meta out;
-        GeneralAccountHelper helper = SharedAccountExtensions.helper;
-        String type = helper.getMetaType(info, "");
+        AccountHandler helper = SharedAccountExtensions.handler;
+        String type = helper.getMetaType(meta, "");
         switch (type) {
 
             case "MKM":
@@ -188,14 +188,14 @@ import chat.dim.*;
 public class CommonExtensionLoader extends ExtensionLoader {
 
     @Override
-    protected void registerAddressFactory() {
-        
+    public void registerAddressFactory() {
+
         Address.setFactory(new CompatibleAddressFactory());
-        
+
     }
 
     @Override
-    protected void registerMetaFactories() {
+    public void registerMetaFactories() {
 
         Meta.Factory mkm = new CompatibleMetaFactory(MetaType.MKM);
         Meta.Factory btc = new CompatibleMetaFactory(MetaType.BTC);
@@ -212,7 +212,7 @@ public class CommonExtensionLoader extends ExtensionLoader {
         Meta.setFactory("MKM", mkm);
         Meta.setFactory("BTC", btc);
         Meta.setFactory("ETH", eth);
-        
+
     }
 
     @Override
@@ -220,7 +220,6 @@ public class CommonExtensionLoader extends ExtensionLoader {
         super.registerContentFactories();
 
         registerCustomizedFactories();
-        
     }
 
     protected void registerCustomizedFactories() {
@@ -228,16 +227,14 @@ public class CommonExtensionLoader extends ExtensionLoader {
         // Application Customized
         Content.setFactory(ContentType.APPLICATION, AppCustomizedContent::new);
         Content.setFactory(ContentType.CUSTOMIZED, AppCustomizedContent::new);
-
     }
 
     @Override
-    protected void registerCommandFactories() {
+    public void registerCommandFactories() {
         super.registerCommandFactories();
 
         // Handshake
-        setCommandFactory(HandshakeCommand.HANDSHAKE, HandshakeCommand::new);
-
+        Command.setFactory(HandshakeCommand.HANDSHAKE, BaseHandshakeCommand::new);
     }
 
 }

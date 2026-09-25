@@ -32,6 +32,11 @@ package chat.dim.protocol.group;
 
 
 /**
+ *  Group invite command interface.
+ *
+ *  Used to record the history of inviting users to join a group.
+ *  The members field contains the IDs of users being invited.
+ *
  *  Group history command: {
  *      "type" : i2s(0x89),
  *      "sn"   : 12345,
@@ -47,6 +52,9 @@ package chat.dim.protocol.group;
  */
 public interface InviteCommand extends GroupCommand {
 
+    /**
+     *  The welcome/joining text sent with the invitation.
+     */
     String getWelcome();
 
 }

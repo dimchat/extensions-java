@@ -36,6 +36,9 @@ import chat.dim.protocol.ID;
 
 /**
  *  General ID Factory
+ *
+ *  Creates/parses entity IDs with cache, concatenating the name,
+ *  address and terminal components.
  */
 public class IdentifierFactory implements ID.Factory {
 
@@ -62,11 +65,26 @@ public class IdentifierFactory implements ID.Factory {
         return did;
     }
 
-    // override for customized ID
+    /**
+     *  Create a new {@link ID} instance.
+     *
+     *  @param identifier - full string form
+     *  @param name - entity name
+     *  @param address - core address
+     *  @param terminal - terminal/location
+     *
+     *  Override this method for customized ID implementations.
+     */
     protected ID newID(String identifier, String name, Address address, String terminal) {
         return new Identifier(identifier, name, address, terminal);
     }
 
+    /**
+     *  Parse an ID string.
+     *
+     *  @param identifier - in 'name@address[/terminal]' format
+     *  @return {@link ID} instance if parsing succeeds, null otherwise
+     */
     protected ID parse(final String identifier) {
         // split for "terminal"
         String[] pair = identifier.split("/");

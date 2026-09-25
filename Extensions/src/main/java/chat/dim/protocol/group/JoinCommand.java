@@ -32,19 +32,28 @@ package chat.dim.protocol.group;
 
 
 /**
+ *  Group join command interface.
+ *
+ *  Used to record the history of users voluntarily joining a group.
+ *  The members field contains the ID of the user joining the group.
+ *
  *  Group history command: {
  *      "type" : i2s(0x89),
- *      "sn"   : 123,
+ *      "sn"   : 12345,
  *
+ *      "time"    : 123.45,
  *      "command" : "join",
- *      "time"    : 123.456,
  *
  *      "group"   : "{GROUP_ID}",
+ *
  *      "text"    : "May I?",
  *  }
  */
 public interface JoinCommand extends GroupCommand {
 
+    /**
+     *  The question/application text of the user requesting to join.
+     */
     String getAsk();
 
 }

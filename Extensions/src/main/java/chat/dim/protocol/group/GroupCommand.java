@@ -42,15 +42,19 @@ import chat.dim.protocol.HistoryCommand;
 import chat.dim.protocol.ID;
 
 /**
+ *  Group command interface for tracking group member/role changes.
+ *
+ *  Extends {@link HistoryCommand} to define group-specific operations.
+ *
  *  Group History
  *
  *  <blockquote><pre>
  *  data format: {
  *      "type" : i2s(0x89),
- *      "sn"   : 123,
+ *      "sn"   : 12345,
  *
+ *      "time"    : 123.45,    // command timestamp
  *      "command" : "reset",   // "invite", "quit", ...
- *      "time"    : 123.456,   // command timestamp
  *
  *      "group"   : "{GROUP_ID}",
  *      "members" : ["{MEMBER_ID}",]

@@ -31,6 +31,10 @@
 package chat.dim.protocol;
 
 /**
+ *  Group Bulletin document interface (group-specific announcement document).
+ *
+ *  Defines a group's public-facing information and core attributes.
+ *
  *  Group Document
  */
 public interface Bulletin extends Document {

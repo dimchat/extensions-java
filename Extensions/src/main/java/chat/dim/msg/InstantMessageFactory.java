@@ -45,6 +45,9 @@ public class InstantMessageFactory implements InstantMessage.Factory {
 
     private long sn;
 
+    /**
+     * Initialize the factory with a random starting serial number.
+     */
     public InstantMessageFactory() {
         super();
         // random seed: microseconds since epoch
@@ -55,7 +58,7 @@ public class InstantMessageFactory implements InstantMessage.Factory {
     }
 
     /**
-     *  next sn
+     * Get the next serial number.
      *
      * @return 1 ~ 2^31-1
      */

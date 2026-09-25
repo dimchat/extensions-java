@@ -37,27 +37,7 @@ import chat.dim.protocol.ContentType;
 import chat.dim.protocol.PageContent;
 import chat.dim.protocol.TransportableFile;
 
-/**
- *  Web Page Content
- *
- *  <blockquote><pre>
- *  data format: {
- *      "type" : i2s(0x20),
- *      "sn"   : 123,
- *
- *      "title" : "...",                // Web title
- *      "desc"  : "...",
- *      "icon"  : "data:image/x-icon;base64,...",
- *
- *      "URL"   : "https://github.com/moky/dimp",
- *
- *      "HTML"      : "...",            // Web content
- *      "mime_type" : "text/html",      // Content-Type
- *      "encoding"  : "utf8",
- *      "base"      : "about:blank"     // Base URL
- *  }
- *  </pre></blockquote>
- */
+
 public class WebPageContent extends BaseContent implements PageContent {
 
     // small image
@@ -66,6 +46,11 @@ public class WebPageContent extends BaseContent implements PageContent {
     // web URL
     private  URI url;
 
+    /**
+     * Create web page content with a raw map.
+     *
+     * @param content - raw map, usually from network or storage.
+     */
     public WebPageContent(Map<String, Object> content) {
         super(content);
         // lazy load
@@ -151,6 +136,15 @@ public class WebPageContent extends BaseContent implements PageContent {
         }
         return url;
     }
+
+    /**
+     * Create a URL instance from string.
+     *
+     * Override this to customize URL parsing if needed.
+     *
+     * @param string - URL string
+     * @return URI instance
+     */
     protected URI createURL(String string) {
         return URI.create(string);
     }

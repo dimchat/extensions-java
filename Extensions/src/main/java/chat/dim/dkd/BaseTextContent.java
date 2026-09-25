@@ -35,24 +35,25 @@ import java.util.Map;
 import chat.dim.protocol.ContentType;
 import chat.dim.protocol.TextContent;
 
-/**
- *  Text Content
- *
- *  <blockquote><pre>
- *  data format: {
- *      "type" : i2s(0x01),
- *      "sn"   : 123,
- *
- *      "text" : "..."
- *  }
- *  </pre></blockquote>
- */
+
 public class BaseTextContent extends BaseContent implements TextContent {
 
+    /**
+     * Create text content with a raw map.
+     *
+     * @param content - raw map, usually from network or storage.
+     */
     public BaseTextContent(Map<String, Object> content) {
         super(content);
     }
 
+    /**
+     * Create text content with the given message.
+     *
+     * Generates a new serial number and message time automatically.
+     *
+     * @param message - text message
+     */
     public BaseTextContent(String message) {
         super(ContentType.TEXT);
         put("text", message);

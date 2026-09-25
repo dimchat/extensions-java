@@ -32,12 +32,19 @@ package chat.dim;
 
 
 /**
- *  Core Extensions Loader
+ * Core extensions loader.
+ *
+ * Mixes in {@link CoreExtensions}, {@link EntityExtensions} and
+ * {@link MessageFactoryExtensions} to initialize the whole SDK,
+ * registering default helpers and factories.
  */
 public class ExtensionLoader implements CoreExtensions, EntityExtensions, MessageFactoryExtensions {
 
     /**
-     *  Register core factories
+     * Register core factories.
+     *
+     * This is the single entry to initialize the extension SDK:
+     * loads core helpers, entity factories and message factories.
      */
     public void load() {
 
@@ -50,7 +57,7 @@ public class ExtensionLoader implements CoreExtensions, EntityExtensions, Messag
     }
 
     /**
-     *  Core extensions
+     * Register core helpers (account/message/command).
      */
     protected void loadCoreExtensions() {
 
@@ -62,7 +69,7 @@ public class ExtensionLoader implements CoreExtensions, EntityExtensions, Messag
     }
 
     /**
-     *  ID, Address, Meta, Document parsers
+     * Register entity factories (ID/Address/Meta/Document).
      */
     protected void loadEntityExtensions() {
 
@@ -76,7 +83,7 @@ public class ExtensionLoader implements CoreExtensions, EntityExtensions, Messag
     }
 
     /**
-     *  Message Factories
+     * Register message/command factories.
      */
     protected void loadMessageExtensions() {
 

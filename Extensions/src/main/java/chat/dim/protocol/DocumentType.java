@@ -30,6 +30,18 @@
  */
 package chat.dim.protocol;
 
+/**
+ *  Document types.
+ *
+ *  <blockquote><pre>
+ *  data format: {
+ *      "type"      : "visa",  // document type
+ *      "data"      : "{JsON data}",
+ *      "signature" : "{Base64 signature}",
+ *      ...         // other properties
+ *  }
+ *  </pre></blockquote>
+ */
 public interface DocumentType {
 
     String VISA     = "visa";      // for user info (communicate key)

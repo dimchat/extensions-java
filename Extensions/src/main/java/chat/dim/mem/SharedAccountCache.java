@@ -42,10 +42,16 @@ public final class SharedAccountCache {
 
     public static MemoryCache<String, ID> idCache = new ThanosCache<>();
 
+    /**
+     * Set the address cache.
+     */
     public static void setAddressCache(MemoryCache<String, Address> cache) {
         addressCache = cache;
     }
 
+    /**
+     * Set the ID cache.
+     */
     public static void setIdCache(MemoryCache<String, ID> cache) {
         idCache = cache;
     }

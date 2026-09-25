@@ -34,6 +34,16 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * Implementation of {@link MemoryCache} with "Thanos-style" memory reduction.
+ *
+ * Core feature: The reduceMemory method removes exactly half of the cache entries
+ * (inspired by Thanos snapping his fingers to kill half the universe), making it
+ * a deterministic eviction policy for memory optimization.
+ *
+ * Note: uses a standard {@link java.util.HashMap} as the underlying storage,
+ * with O(1) get/put operations.
+ */
 public class ThanosCache <K, V> implements MemoryCache<K, V> {
 
     private final Map<K, V> caches = new HashMap<>();
@@ -60,12 +70,26 @@ public class ThanosCache <K, V> implements MemoryCache<K, V> {
     @Override
     public int reduceMemory() {
         int finger = 0;
+        // Execute Thanos-style eviction (kill half the entries)
         finger = thanos(caches, finger);
+        // Return number of remaining entries (half of original count)
         return finger >> 1;
     }
 
     /**
-     *  Thanos can kill half lives of a world with a snap of the finger
+     * Thanos-style cache eviction function - removes half of the map entries.
+     *
+     * "Thanos can kill half lives of a world with a snap of the finger"
+     *
+     * Eviction logic: iterates through map entries in insertion order;
+     * removes entries where the incremented finger counter is odd (keeps even
+     * entries); guarantees exactly 50% of entries are removed (deterministic eviction).
+     *
+     * @param planet - the map (cache) to "snap" (modify in-place)
+     * @param finger - the starting counter value (typically 0 for fresh snap)
+     * @return the final value of the finger counter (total number of entries processed)
+     *
+     * Note: modifies the input map directly (in-place operation).
      */
     public static <K, V> int thanos(Map<K, V> planet, int finger) {
         Iterator<Map.Entry<K, V>> people = planet.entrySet().iterator();

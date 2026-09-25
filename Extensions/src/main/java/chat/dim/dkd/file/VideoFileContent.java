@@ -39,38 +39,29 @@ import chat.dim.protocol.TransportableData;
 import chat.dim.protocol.TransportableFile;
 import chat.dim.protocol.VideoContent;
 
-/**
- *  Video File Content
- *
- *  <blockquote><pre>
- *  data format: {
- *      "type" : i2s(0x16),
- *      "sn"   : 123,
- *
- *      "data"     : "...",        // base64_encode(fileContent)
- *      "filename" : "movie.mp4",
- *
- *      "URL"      : "http://...", // download from CDN
- *      // before fileContent uploaded to a public CDN,
- *      // it should be encrypted by a symmetric key
- *      "key"      : {             // symmetric key to decrypt file data
- *          "algorithm" : "AES",   // "DES", ...
- *          "data"      : "{BASE64_ENCODE}",
- *          ...
- *      },
- *      "snapshot" : "data:image/jpeg;base64,..."
- *  }
- *  </pre></blockquote>
- */
+
 public class VideoFileContent extends BaseFileContent implements VideoContent {
 
     // small image
     private TransportableFile snapshot = null;
 
+    /**
+     * Create video content with a raw map.
+     *
+     * @param content - raw map, usually from network or storage.
+     */
     public VideoFileContent(Map<String, Object> content) {
         super(content);
     }
 
+    /**
+     * Create video content with the given components.
+     *
+     * @param data     - video data
+     * @param filename - file name
+     * @param url      - download URL
+     * @param key      - decrypt key
+     */
     public VideoFileContent(TransportableData data, String filename, URI url, DecryptKey key) {
         super(ContentType.VIDEO, data, filename, url, key);
     }

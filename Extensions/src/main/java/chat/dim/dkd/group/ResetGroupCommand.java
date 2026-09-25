@@ -40,10 +40,21 @@ import chat.dim.protocol.group.ResetCommand;
 
 public class ResetGroupCommand extends BaseGroupCommand implements ResetCommand {
 
+    /**
+     * Create reset command with a raw map.
+     *
+     * @param content - raw command map.
+     */
     public ResetGroupCommand(Map<String, Object> content) {
         super(content);
     }
 
+    /**
+     * Create reset command with the given group and members.
+     *
+     * @param group   - the group ID
+     * @param members - all members after reset.
+     */
     public ResetGroupCommand(ID group, List<ID> members) {
         super(GroupCommand.RESET, group, members);
     }

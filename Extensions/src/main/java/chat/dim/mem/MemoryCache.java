@@ -30,25 +30,45 @@
  */
 package chat.dim.mem;
 
+/**
+ * Generic in-memory cache interface with memory reduction capability.
+ *
+ * Defines the core contract for key-value cache operations, plus a specialized
+ * method to reduce memory usage (critical for mobile/resource-constrained environments).
+ *
+ * @param <K> key type (must be hashable)
+ * @param <V> value type (can be nullable)
+ */
 public interface MemoryCache <K, V> {
 
+    /**
+     * Retrieves a value from the cache by key.
+     *
+     * @param key - the cache key to look up (non-null)
+     * @return the cached value (null if key not found or value is null)
+     */
     V get(K key);
 
     /**
+     * Stores a value in the cache.
+     *
+     * @param key - the cache key to associate with the value (non-null)
      * @param value is the value to cache (null = remove the key from cache)
      * @return the previous value associated with the key (null if none)
      */
     V put(K key, V value);
 
     /**
-     * @return current number of entries in the cache
+     * Returns the current number of entries in the cache.
+     *
+     * @return a non-negative integer representing the count of cached key-value pairs
      */
     int size();
 
     /**
-     *  Garbage Collection
+     * Reduces cache memory usage by evicting entries (implementation-specific logic).
      *
-     * @return number of entries remaining in the cache after reduction
+     * @return the number of entries remaining in the cache after reduction
      */
     int reduceMemory();
 

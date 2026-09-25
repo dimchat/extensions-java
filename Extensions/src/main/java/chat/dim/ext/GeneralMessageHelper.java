@@ -46,7 +46,10 @@ import chat.dim.protocol.ReliableMessage;
 import chat.dim.protocol.SecureMessage;
 
 /**
- *  Message GeneralHelper
+ * General message helper.
+ *
+ * Creates/parses content, envelope, instant/secure/reliable
+ * messages with the registered factories.
  */
 public class GeneralMessageHelper implements MessageHandler,
                                              ContentHelper, EnvelopeHelper,
@@ -79,11 +82,12 @@ public class GeneralMessageHelper implements MessageHandler,
         return group != null && group.isBroadcast();
     }
 
-    /// Get a mutable map from an object.
-    ///
-    /// [dict] is a raw map or a mapping instance;
-    /// returns null if it cannot be converted.
-    // protected
+    /**
+     * Get a mutable map from an object.
+     *
+     * @param dict - a raw map or a mapping instance;
+     * @return null if it cannot be converted.
+     */
     protected Map<String, Object> getMap(Object dict) {
         return Wrapper.getMap(dict);
     }

@@ -37,30 +37,29 @@ import chat.dim.protocol.ID;
 import chat.dim.protocol.Meta;
 import chat.dim.protocol.MetaCommand;
 
-/**
- *  Meta Command Content
- *
- *  <blockquote><pre>
- *  data format: {
- *      "type" : i2s(0x88),
- *      "sn"   : 123,
- *
- *      "command" : "meta", // command name
- *      "did"     : "{ID}", // contact's ID
- *      "meta"    : {...}   // when meta is null, means query meta for ID
- *  }
- *  </pre></blockquote>
- */
+
 public class BaseMetaCommand extends BaseCommand implements MetaCommand {
 
     private Meta meta;
 
+    /**
+     * Create meta command with a raw map.
+     *
+     * @param content - raw command map.
+     */
     public BaseMetaCommand(Map<String, Object> content) {
         super(content);
         // lazy
         meta = null;
     }
 
+    /**
+     * Create meta command with the given cmd, entity ID and meta.
+     *
+     * @param cmd  - defaults to {@link MetaCommand#META}
+     * @param did  - entity ID
+     * @param meta - entity meta (optional, null for querying)
+     */
     public BaseMetaCommand(String cmd, ID did, Meta meta) {
         super(cmd);
         // ID

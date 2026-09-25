@@ -77,6 +77,7 @@ public final class ETHMeta extends BaseMeta {
         // 64 bytes key data without prefix 0x04
         TransportableData data = key.getData();
         assert data != null && !data.isEmpty() : "meta.key error: " + key;
+        // generate ETH address with public key data
         return ETHAddress.generate(data.getBytes());
     }
 }

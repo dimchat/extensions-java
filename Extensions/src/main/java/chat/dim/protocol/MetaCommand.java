@@ -33,12 +33,16 @@ package chat.dim.protocol;
 import chat.dim.dkd.cmd.BaseMetaCommand;
 
 /**
+ *  Meta command interface for querying/updating entity metadata.
+ *
+ *  Used to request or respond with an entity's core metadata (e.g. user/group info).
+ *
  *  Meta Command
  *
  *  <blockquote><pre>
  *  data format: {
  *      "type" : i2s(0x88),
- *      "sn"   : 123,
+ *      "sn"   : 12345,
  *
  *      "command" : "meta", // command name
  *      "did"     : "{ID}", // contact's ID
@@ -48,15 +52,15 @@ import chat.dim.dkd.cmd.BaseMetaCommand;
  */
 public interface MetaCommand extends Command {
 
-    String META      = "meta";
+    String META      = "meta";       // querying/updating entity metadata
 
     /**
-     *  Entity ID
+     *  Contact identifier.
      */
     ID getIdentifier();
 
     /**
-     *  Entity Meta
+     *  Entity meta. Non-null: Response; Null: Query request.
      */
     Meta getMeta();
 
@@ -64,10 +68,27 @@ public interface MetaCommand extends Command {
     //  Factories
     //
 
+    /**
+     *  Creates a query meta command to request entity metadata.
+     *
+     *  Use this to ask for metadata of a specific entity (meta field will be null).
+     *
+     * @param did  target entity ID (user/group ID) to query
+     * @return a MetaCommand instance for metadata query
+     */
     static MetaCommand query(ID did) {
         return new BaseMetaCommand(did);
     }
 
+    /**
+     *  Creates a response meta command with entity metadata.
+     *
+     *  Use this to send metadata back to a query request.
+     *
+     * @param did  target entity ID (user/group ID)
+     * @param meta metadata to return for the entity
+     * @return a MetaCommand instance containing the metadata
+     */
     static MetaCommand response(ID did, Meta meta) {
         return new BaseMetaCommand(did, meta);
     }

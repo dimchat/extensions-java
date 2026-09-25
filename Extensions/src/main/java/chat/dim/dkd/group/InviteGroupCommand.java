@@ -40,10 +40,21 @@ import chat.dim.protocol.group.InviteCommand;
 
 public class InviteGroupCommand extends BaseGroupCommand implements InviteCommand {
 
+    /**
+     * Create invite command with a raw map.
+     *
+     * @param content - raw command map.
+     */
     public InviteGroupCommand(Map<String, Object> content) {
         super(content);
     }
 
+    /**
+     * Create invite command with the given group and members.
+     *
+     * @param group   - the group ID
+     * @param members - the member IDs to invite.
+     */
     public InviteGroupCommand(ID group, List<ID> members) {
         super(GroupCommand.INVITE, group, members);
     }

@@ -37,21 +37,14 @@ import chat.dim.dkd.BaseContent;
 import chat.dim.protocol.ContentType;
 import chat.dim.protocol.MoneyContent;
 
-/**
- *  Money Content
- *
- *  <blockquote><pre>
- *  data format: {
- *      "type" : i2s(0x40),
- *      "sn"   : 123,
- *
- *      "currency" : "RMB", // USD, USDT, ...
- *      "amount"   : 100.00
- *  }
- *  </pre></blockquote>
- */
+
 public class BaseMoneyContent extends BaseContent implements MoneyContent {
 
+    /**
+     * Create money content with a raw map.
+     *
+     * @param content - raw map, usually from network or storage.
+     */
     public BaseMoneyContent(Map<String, Object> content) {
         super(content);
     }

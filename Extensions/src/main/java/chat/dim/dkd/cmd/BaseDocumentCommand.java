@@ -40,26 +40,16 @@ import chat.dim.protocol.DocumentCommand;
 import chat.dim.protocol.ID;
 import chat.dim.protocol.Meta;
 
-/**
- *  Document Command Content
- *
- *  <blockquote><pre>
- *  data format: {
- *      "type" : i2s(0x88),
- *      "sn"   : 123,
- *
- *      "command"   : "documents", // command name
- *      "did"       : "{ID}",      // entity ID
- *      "meta"      : {...},       // only for handshaking with new friend
- *      "documents" : [...],       // when this is null, means to query
- *      "last_time" : 12345        // old document time for querying
- *  }
- *  </pre></blockquote>
- */
+
 public class BaseDocumentCommand extends BaseMetaCommand implements DocumentCommand {
 
     private List<Document> documents;
 
+    /**
+     * Create document command with a raw map.
+     *
+     * @param content - raw command map.
+     */
     public BaseDocumentCommand(Map<String, Object> content) {
         super(content);
         // lazy
@@ -67,11 +57,11 @@ public class BaseDocumentCommand extends BaseMetaCommand implements DocumentComm
     }
 
     /**
-     *  Send Meta and Documents to new friend
+     * Create document command for updating.
      *
      * @param did  - entity ID
-     * @param meta - entity Meta
-     * @param docs - entity Documents
+     * @param meta - entity meta (optional)
+     * @param docs - document list to update (optional)
      */
     public BaseDocumentCommand(ID did, Meta meta, List<Document> docs) {
         super(DOCUMENTS, did, meta);
@@ -83,10 +73,10 @@ public class BaseDocumentCommand extends BaseMetaCommand implements DocumentComm
     }
 
     /**
-     *  Query Entity Document for updating with current signature
+     * Create document command for querying.
      *
      * @param did  - entity ID
-     * @param last - last document time
+     * @param last - timestamp to query documents updated after it (optional)
      */
     public BaseDocumentCommand(ID did, Date last) {
         super(DOCUMENTS, did, null);

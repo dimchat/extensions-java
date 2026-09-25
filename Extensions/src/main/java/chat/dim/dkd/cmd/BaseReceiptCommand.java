@@ -37,27 +37,7 @@ import chat.dim.dkd.BaseCommand;
 import chat.dim.protocol.Envelope;
 import chat.dim.protocol.ReceiptCommand;
 
-/**
- *  Receipt Command Content
- *
- *  <blockquote><pre>
- *  data format: {
- *      "type" : i2s(0x88),
- *      "sn"   : 456,
- *
- *      "command" : "receipt",
- *      "text"    : "...",  // text message
- *      "origin"  : {       // original message envelope
- *          "sender"    : "...",
- *          "receiver"  : "...",
- *          "time"      : 0,
- *
- *          "sn"        : 123,
- *          "signature" : "..."
- *      }
- *  }
- *  </pre></blockquote>
- */
+
 public class BaseReceiptCommand extends BaseCommand implements ReceiptCommand {
 
     /**
@@ -65,10 +45,21 @@ public class BaseReceiptCommand extends BaseCommand implements ReceiptCommand {
      */
     private Envelope envelope = null;
 
+    /**
+     * Create receipt command with a raw map.
+     *
+     * @param content - raw command map.
+     */
     public BaseReceiptCommand(Map<String, Object> content) {
         super(content);
     }
 
+    /**
+     * Create receipt command with the given text and origin.
+     *
+     * @param text   - the receipt text
+     * @param origin - the envelope of the original message being responded to.
+     */
     public BaseReceiptCommand(String text, Map<String, Object> origin) {
         super(RECEIPT);
         // text message
@@ -128,4 +119,5 @@ public class BaseReceiptCommand extends BaseCommand implements ReceiptCommand {
         }
         return Converter.getString(origin.get("signature"));
     }
+
 }

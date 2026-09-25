@@ -36,11 +36,11 @@ package chat.dim.protocol;
  *  <blockquote><pre>
  *  data format: {
  *      "type" : i2s(0x89),
- *      "sn"   : 123,
+ *      "sn"   : 12345,
  *
- *      "command" : "...", // command name
- *      "time"    : 0,     // command timestamp
- *      "extra"   : info   // command parameters
+ *      "time"    : 123.45,  // command timestamp
+ *      "command" : "...",   // command name
+ *      "extra"   : info     // command parameters
  *  }
  *  </pre></blockquote>
  */

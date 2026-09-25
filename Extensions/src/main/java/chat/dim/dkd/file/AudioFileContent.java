@@ -38,36 +38,26 @@ import chat.dim.protocol.ContentType;
 import chat.dim.protocol.DecryptKey;
 import chat.dim.protocol.TransportableData;
 
-/**
- *  Audio File Content
- *
- *  <blockquote><pre>
- *  data format: {
- *      "type" : i2s(0x14),
- *      "sn"   : 123,
- *
- *      "data"     : "...",        // base64_encode(fileContent)
- *      "filename" : "voice.mp4",
- *
- *      "URL"      : "http://...", // download from CDN
- *      // before fileContent uploaded to a public CDN,
- *      // it should be encrypted by a symmetric key
- *      "key"      : {             // symmetric key to decrypt file data
- *          "algorithm" : "AES",   // "DES", ...
- *          "data"      : "{BASE64_ENCODE}",
- *          ...
- *      },
- *      "duration" : 123.45,
- *      "text"     : "..."         // Automatic Speech Recognition
- *  }
- *  </pre></blockquote>
- */
+
 public class AudioFileContent extends BaseFileContent implements AudioContent {
 
+    /**
+     * Create audio content with a raw map.
+     *
+     * @param content - raw map, usually from network or storage.
+     */
     public AudioFileContent(Map<String, Object> content) {
         super(content);
     }
 
+    /**
+     * Create audio content with the given components.
+     *
+     * @param data     - audio data
+     * @param filename - file name
+     * @param url      - download URL
+     * @param key      - decrypt key
+     */
     public AudioFileContent(TransportableData data, String filename, URI url, DecryptKey key) {
         super(ContentType.AUDIO, data, filename, url, key);
     }
@@ -95,4 +85,5 @@ public class AudioFileContent extends BaseFileContent implements AudioContent {
     public String getText() {
         return getString("text");
     }
+
 }

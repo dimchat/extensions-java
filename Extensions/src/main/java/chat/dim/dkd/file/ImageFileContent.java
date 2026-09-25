@@ -39,38 +39,29 @@ import chat.dim.protocol.ImageContent;
 import chat.dim.protocol.TransportableData;
 import chat.dim.protocol.TransportableFile;
 
-/**
- *  Image File Content
- *
- *  <blockquote><pre>
- *  data format: {
- *      "type" : i2s(0x12),
- *      "sn"   : 123,
- *
- *      "data"     : "...",        // base64_encode(fileContent)
- *      "filename" : "photo.png",
- *
- *      "URL"      : "http://...", // download from CDN
- *      // before fileContent uploaded to a public CDN,
- *      // it should be encrypted by a symmetric key
- *      "key"      : {             // symmetric key to decrypt file data
- *          "algorithm" : "AES",   // "DES", ...
- *          "data"      : "{BASE64_ENCODE}",
- *          ...
- *      },
- *      "thumbnail" : "data:image/jpeg;base64,..."
- *  }
- *  </pre></blockquote>
- */
+
 public class ImageFileContent extends BaseFileContent implements ImageContent {
 
     // small image
     private TransportableFile thumbnail = null;
 
+    /**
+     * Create image content with a raw map.
+     *
+     * @param content - raw map, usually from network or storage.
+     */
     public ImageFileContent(Map<String, Object> content) {
         super(content);
     }
 
+    /**
+     * Create image content with the given components.
+     *
+     * @param data     - image data
+     * @param filename - file name
+     * @param url      - download URL
+     * @param key      - decrypt key
+     */
     public ImageFileContent(TransportableData data, String filename, URI url, DecryptKey key) {
         super(ContentType.IMAGE, data, filename, url, key);
     }

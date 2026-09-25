@@ -43,10 +43,21 @@ import chat.dim.protocol.group.GroupCommand;
  */
 public class ExpelGroupCommand extends BaseGroupCommand implements ExpelCommand {
 
+    /**
+     * Create expel command with a raw map.
+     *
+     * @param content - raw command map.
+     */
     public ExpelGroupCommand(Map<String, Object> content) {
         super(content);
     }
 
+    /**
+     * Create expel command with the given group and members.
+     *
+     * @param group   - the group ID
+     * @param members - the member IDs to expel.
+     */
     public ExpelGroupCommand(ID group, List<ID> members) {
         super(GroupCommand.EXPEL, group, members);
     }

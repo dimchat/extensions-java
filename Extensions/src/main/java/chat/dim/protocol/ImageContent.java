@@ -31,12 +31,16 @@
 package chat.dim.protocol;
 
 /**
+ *  Image message content interface.
+ *
+ *  Extends {@link FileContent} with thumbnail support for previewing images.
+ *
  *  Image File Content
  *
  *  <blockquote><pre>
  *  data format: {
  *      "type" : i2s(0x12),
- *      "sn"   : 123,
+ *      "sn"   : 12345,
  *
  *      "data"     : "...",        // base64_encode(fileContent)
  *      "filename" : "photo.png",
@@ -55,6 +59,10 @@ package chat.dim.protocol;
  */
 public interface ImageContent extends FileContent {
 
+    /**
+     *  Thumbnail preview of the image (Base64 encoded).
+     *  Used for quick preview without downloading the full image file.
+     */
     void setThumbnail(TransportableFile img);
 
     TransportableFile getThumbnail();

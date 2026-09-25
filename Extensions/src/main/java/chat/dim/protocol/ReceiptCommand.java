@@ -34,6 +34,11 @@ import chat.dim.ext.CommandHandler;
 import chat.dim.ext.SharedCommandExtensions;
 
 /**
+ *  Receipt command interface (message acknowledgment/receipt).
+ *
+ *  Used to send receipt/acknowledgment for a previously received message,
+ *  confirming delivery or providing status feedback (via text).
+ *
  *  Receipt Command
  *
  *  <blockquote><pre>
@@ -56,12 +61,26 @@ import chat.dim.ext.SharedCommandExtensions;
  */
 public interface ReceiptCommand extends Command {
 
-    String RECEIPT   = "receipt";
+    String RECEIPT   = "receipt";    // message receipt/acknowledgment
 
+    /**
+     *  Feedback text.
+     */
     String getText();
 
+    /**
+     *  Envelope of the original message.
+     */
     Envelope getOriginalEnvelope();
+
+    /**
+     *  Serial number of the original message for locating the chat history.
+     */
     Long getOriginalSerialNumber();
+
+    /**
+     *  Signature of the original message for verification.
+     */
     String getOriginalSignature();
 
     //

@@ -35,6 +35,10 @@ import java.util.List;
 import chat.dim.dkd.ListContent;
 
 /**
+ *  Content array interface for sending multiple contents in one message.
+ *
+ *  Enables packaging multiple different types of {@link Content} into a single message.
+ *
  *  Array Content
  *
  *  <blockquote><pre>
@@ -48,6 +52,9 @@ import chat.dim.dkd.ListContent;
  */
 public interface ArrayContent extends Content {
 
+    /**
+     *  Array of multiple message contents (can be different types).
+     */
     List<Content> getContents();
 
     //

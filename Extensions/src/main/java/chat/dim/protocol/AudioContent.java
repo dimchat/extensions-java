@@ -31,12 +31,16 @@
 package chat.dim.protocol;
 
 /**
+ *  Audio message content interface.
+ *
+ *  Extends {@link FileContent} with speech-to-text (ASR) support for audio messages.
+ *
  *  Audio File Content
  *
  *  <blockquote><pre>
  *  data format: {
  *      "type" : i2s(0x14),
- *      "sn"   : 123,
+ *      "sn"   : 12345,
  *
  *      "data"     : "...",        // base64_encode(fileContent)
  *      "filename" : "voice.mp4",
@@ -56,9 +60,17 @@ package chat.dim.protocol;
  */
 public interface AudioContent extends FileContent {
 
+    /**
+     *  Duration of the audio in seconds.
+     *  Returns the playing duration (null if unknown).
+     */
     void setDuration(float duration);
     float getDuration();
 
+    /**
+     *  Automatic Speech Recognition (ASR) text.
+     *  Transcribed text.
+     */
     void setText(String asr);
     String getText();
 

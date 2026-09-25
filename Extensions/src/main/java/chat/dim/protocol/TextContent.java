@@ -38,7 +38,7 @@ import chat.dim.dkd.BaseTextContent;
  *  <blockquote><pre>
  *  data format: {
  *      "type" : i2s(0x01),
- *      "sn"   : 123,
+ *      "sn"   : 12345,
  *
  *      "text" : "..."
  *  }
@@ -55,4 +55,5 @@ public interface TextContent extends Content {
     static TextContent create(String text) {
         return new BaseTextContent(text);
     }
+
 }

@@ -32,6 +32,11 @@ package chat.dim.protocol.group;
 
 
 /**
+ *  Group expel command interface (DEPRECATED).
+ *
+ *  Originally used to record the history of expelling members from a group.
+ *  This command is deprecated - use {@link ResetCommand} (RESET) instead for member removal.
+ *
  *  Group history command: {
  *      "type" : i2s(0x89),
  *      "sn"   : 12345,
@@ -48,6 +53,9 @@ package chat.dim.protocol.group;
 public interface ExpelCommand extends GroupCommand {
     // Deprecated (use 'reset' instead)
 
+    /**
+     *  The farewell/leaving text sent with the expulsion.
+     */
     String getAway();
 
 }

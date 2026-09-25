@@ -43,6 +43,18 @@ import chat.dim.protocol.TransportableData;
 import chat.dim.protocol.VerifyKey;
 import chat.dim.type.Dictionary;
 
+/**
+ *  Base document.
+ *
+ *  <blockquote><pre>
+ *  data format: {
+ *      "type"      : "visa",                 // document type
+ *      "data"      : "{JsON data}",          // document data (optional)
+ *      "signature" : "{Base64 signature}",   // signature of data (optional)
+ *      ...         // other properties
+ *  }
+ *  </pre></blockquote>
+ */
 public class BaseDocument extends Dictionary implements Document {
 
     private String json;            // JsON.encode(properties)

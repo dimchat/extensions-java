@@ -38,15 +38,20 @@ import chat.dim.dkd.file.ImageFileContent;
 import chat.dim.dkd.file.VideoFileContent;
 
 /**
+ *  File message content interface.
+ *
+ *  Defines the base structure for all file-type messages (image, audio, video, etc.).
+ *  Files can be embedded as base64 data or downloaded via CDN URL (with encryption).
+ *
  *  File Content
  *
  *  <blockquote><pre>
  *  data format: {
  *      "type" : i2s(0x10),
- *      "sn"   : 123,
+ *      "sn"   : 12345,
  *
  *      "data"     : "...",        // base64_encode(fileContent)
- *      "filename" : "photo.png",
+ *      "filename" : "archive.zip",
  *
  *      "URL"      : "http://...", // download from CDN
  *      // before fileContent uploaded to a public CDN,
@@ -61,9 +66,16 @@ import chat.dim.dkd.file.VideoFileContent;
  */
 public interface FileContent extends Content {
 
+    /**
+     *  Embedded file content (Base64 encoded).
+     *  Null if file is only available via CDN URL.
+     */
     void setData(TransportableData data);
     TransportableData getData();
 
+    /**
+     *  Original filename, e.g. 'photo.png', 'document.pdf'.
+     */
     void setFilename(String filename);
     String getFilename();
 

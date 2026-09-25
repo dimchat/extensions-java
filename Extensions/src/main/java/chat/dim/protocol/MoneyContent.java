@@ -38,7 +38,7 @@ import chat.dim.dkd.asset.BaseMoneyContent;
  *  <blockquote><pre>
  *  data format: {
  *      "type" : i2s(0x40),
- *      "sn"   : 123,
+ *      "sn"   : 12345,
  *
  *      "currency" : "RMB", // USD, USDT, ...
  *      "amount"   : 100.00
@@ -47,8 +47,14 @@ import chat.dim.dkd.asset.BaseMoneyContent;
  */
 public interface MoneyContent extends Content {
 
+    /**
+     *  Currency unit, e.g. RMB, USD, USDT.
+     */
     String getCurrency();
 
+    /**
+     *  Money amount value.
+     */
     void setAmount(Number amount);
     Number getAmount();
 

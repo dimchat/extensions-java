@@ -33,12 +33,16 @@ package chat.dim.protocol;
 import chat.dim.dkd.asset.TransferMoneyContent;
 
 /**
+ *  Transfer money content interface.
+ *
+ *  Extends {@link MoneyContent} with sender and receiver.
+ *
  *  Transfer Money
  *
  *  <blockquote><pre>
  *  data format: {
  *      "type" : i2s(0x41),
- *      "sn"   : 123,
+ *      "sn"   : 12345,
  *
  *      "currency" : "RMB",    // USD, USDT, ...
  *      "amount"   : 100.00,
@@ -49,11 +53,15 @@ import chat.dim.dkd.asset.TransferMoneyContent;
  */
 public interface TransferContent extends MoneyContent {
 
-    // sender
+    /**
+     *  Payer / sender ID.
+     */
     void setRemitter(ID sender);
     ID getRemitter();
 
-    // receiver
+    /**
+     *  Payee / receiver ID.
+     */
     void setRemittee(ID receiver);
     ID getRemittee();
 

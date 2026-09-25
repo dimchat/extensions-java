@@ -44,11 +44,18 @@ import chat.dim.protocol.VerifyKey;
 
 /**
  *  Base Meta Factory
+ *
+ *  Creates/parses metas by type (mkm/btc/eth/...).
  */
 public class BaseMetaFactory implements Meta.Factory {
 
     protected final String type;
 
+    /**
+     *  Create factory for the given meta type.
+     *
+     *  @param version - meta type
+     */
     public BaseMetaFactory(String version) {
         super();
         type = version;

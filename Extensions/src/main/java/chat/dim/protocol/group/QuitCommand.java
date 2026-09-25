@@ -32,19 +32,28 @@ package chat.dim.protocol.group;
 
 
 /**
+ *  Group quit command interface.
+ *
+ *  Used to record the history of members voluntarily leaving a group.
+ *  The members field contains the ID of the member quitting the group.
+ *
  *  Group history command: {
  *      "type" : i2s(0x89),
- *      "sn"   : 123,
+ *      "sn"   : 12345,
  *
+ *      "time"    : 123.45,
  *      "command" : "quit",
- *      "time"    : 123.456,
  *
  *      "group"   : "{GROUP_ID}",
+ *
  *      "text"    : "Good bye!",
  *  }
  */
 public interface QuitCommand extends GroupCommand {
 
+    /**
+     *  The farewell/leaving text of the member quitting the group.
+     */
     String getBye();
 
 }

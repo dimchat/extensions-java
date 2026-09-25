@@ -38,24 +38,14 @@ import chat.dim.dkd.cmd.BaseHistoryCommand;
 import chat.dim.protocol.ID;
 import chat.dim.protocol.group.GroupCommand;
 
-/**
- *  Group History
- *
- *  <blockquote><pre>
- *  data format: {
- *      "type" : i2s(0x89),
- *      "sn"   : 123,
- *
- *      "command" : "reset",   // "invite", "quit", ...
- *      "time"    : 123.456,   // command timestamp
- *
- *      "group"   : "{GROUP_ID}",
- *      "members" : ["{MEMBER_ID}",]
- *  }
- *  </pre></blockquote>
- */
+
 public class BaseGroupCommand extends BaseHistoryCommand implements GroupCommand {
 
+    /**
+     * Create group command with a raw map.
+     *
+     * @param content - raw command map.
+     */
     public BaseGroupCommand(Map<String, Object> content) {
         super(content);
     }
@@ -75,14 +65,20 @@ public class BaseGroupCommand extends BaseHistoryCommand implements GroupCommand
     }
 
     /**
-     *  Group history command: {
-     *      "type" : i2s(0x89),
-     *      "sn"   : 123,
+     * Create group command with the given cmd, group and members.
      *
-     *      "command" : "invite",      // or expel
-     *      "group"   : "{GROUP_ID}",
-     *      "members" : ["{MEMBER_ID}", ],
-     *  }
+     * Group history command: {
+     *     "type" : i2s(0x89),
+     *     "sn"   : 123,
+     *
+     *     "command" : "invite",      // or expel
+     *     "group"   : "{GROUP_ID}",
+     *     "members" : ["{MEMBER_ID}", ],
+     * }
+     *
+     * @param cmd     - group command name
+     * @param group   - group ID
+     * @param members - member IDs (optional)
      */
     public BaseGroupCommand(String cmd, ID group, List<ID> members) {
         super(cmd);
@@ -116,4 +112,5 @@ public class BaseGroupCommand extends BaseHistoryCommand implements GroupCommand
         }
         remove("member");
     }
+
 }

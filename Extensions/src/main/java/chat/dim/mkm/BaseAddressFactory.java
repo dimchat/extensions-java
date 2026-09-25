@@ -35,6 +35,9 @@ import chat.dim.protocol.Address;
 
 /**
  *  Base Address Factory
+ *
+ *  Parses address strings with cache, supporting broadcast
+ *  addresses (anywhere/everywhere) and normal addresses (BTC/ETH/...).
  */
 public class BaseAddressFactory implements Address.Factory {
 
@@ -50,6 +53,12 @@ public class BaseAddressFactory implements Address.Factory {
         return add;
     }
 
+    /**
+     *  Parse an address string.
+     *
+     *  @param address - the string representation
+     *  @return {@link Address} instance if recognized, null otherwise
+     */
     protected Address parse(String address) {
         int len = address == null ? 0 : address.length();
         //

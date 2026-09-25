@@ -47,10 +47,16 @@ public class BaseBulletin extends BaseDocument implements Bulletin {
         super(dictionary);
     }
 
+    /**
+     *  Create document with data &amp; signature from local storage
+     */
     public BaseBulletin(String data, TransportableData signature) {
         super(DocumentType.BULLETIN, data, signature);
     }
 
+    /**
+     *  Create a new empty bulletin
+     */
     public BaseBulletin() {
         super(DocumentType.BULLETIN);
     }

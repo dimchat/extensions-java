@@ -38,9 +38,21 @@ import chat.dim.ext.SharedCommandExtensions;
 import chat.dim.ext.SharedMessageExtensions;
 
 
-// MixIn
+/**
+ * Core extensions.
+ *
+ * Registers the default account, message and command helpers
+ * into the shared extension storages, so that the whole SDK
+ * can create/parse entities and messages without extra setup.
+ */
 public interface CoreExtensions {
 
+    /**
+     * Register the account helpers (mkm).
+     *
+     * Sets {@link GeneralAccountHelper} as the default handler for
+     * address/ID/meta/document parsing and generating.
+     */
     // protected
     default void registerAccountHelpers() {
 
@@ -54,6 +66,12 @@ public interface CoreExtensions {
 
     }
 
+    /**
+     * Register the message helpers (dkd).
+     *
+     * Sets {@link GeneralMessageHelper} as the default handler for
+     * content/envelope/instant/secure/reliable message operations.
+     */
     // protected
     default void registerMessageHelpers() {
 
@@ -68,6 +86,12 @@ public interface CoreExtensions {
 
     }
 
+    /**
+     * Register the command helpers (cmd).
+     *
+     * Sets {@link GeneralCommandHelper} as the default handler for
+     * command parsing and factory management.
+     */
     // protected
     default void registerCommandHelpers() {
 

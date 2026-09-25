@@ -38,29 +38,29 @@ import chat.dim.protocol.ContentType;
 import chat.dim.protocol.ForwardContent;
 import chat.dim.protocol.ReliableMessage;
 
-/**
- *  Top-Secret Content
- *
- *  <blockquote><pre>
- *  data format: {
- *      "type" : i2s(0xFF),
- *      "sn"   : 456,
- *
- *      "forward" : {...}  // reliable (secure + certified) message
- *      "secrets" : [...]  // reliable (secure + certified) messages
- *  }
- *  </pre></blockquote>
- */
+
 public class SecretContent extends BaseContent implements ForwardContent {
 
     private List<ReliableMessage> secrets;
 
+    /**
+     * Create forward content with a raw map.
+     *
+     * @param content - raw map, usually from network or storage.
+     */
     public SecretContent(Map<String, Object> content) {
         super(content);
         // lazy load
         secrets = null;
     }
 
+    /**
+     * Create forward content with the given messages.
+     *
+     * Generates a new serial number and message time automatically.
+     *
+     * @param messages - the list of forward messages.
+     */
     public SecretContent(List<ReliableMessage> messages) {
         super(ContentType.FORWARD);
         // secret messages

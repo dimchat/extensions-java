@@ -38,29 +38,28 @@ import chat.dim.protocol.CombineContent;
 import chat.dim.protocol.ContentType;
 import chat.dim.protocol.InstantMessage;
 
-/**
- *  Combine Forward Content
- *
- *  <blockquote><pre>
- *  data format: {
- *      "type" : i2s(0xCF),
- *      "sn"   : 123,
- *
- *      "title"    : "...",  // chat title
- *      "messages" : [...]   // chat history
- *  }
- *  </pre></blockquote>
- */
+
 public class CombineForwardContent extends BaseContent implements CombineContent {
 
     private List<InstantMessage> history;
 
+    /**
+     * Create combine forward content with a raw map.
+     *
+     * @param content - raw map, usually from network or storage.
+     */
     public CombineForwardContent(Map<String, Object> content) {
         super(content);
         // lazy load
         history = null;
     }
 
+    /**
+     * Create combine forward content with the given title and messages.
+     *
+     * @param title    - the chat name
+     * @param messages - the chat history.
+     */
     public CombineForwardContent(String title, List<InstantMessage> messages) {
         super(ContentType.COMBINE_FORWARD);
         // chat name
@@ -93,7 +92,7 @@ public class CombineForwardContent extends BaseContent implements CombineContent
             if (info instanceof List) {
                 messages = InstantMessage.convert((List<?>) info);
             } else {
-                assert info == null : "combine message error: " + info;
+                assert info == null : "combined messages error: " + info;
                 messages = new ArrayList<>();
             }
             history = messages;

@@ -31,12 +31,16 @@
 package chat.dim.protocol;
 
 /**
+ *  Video message content interface.
+ *
+ *  Extends {@link FileContent} with snapshot support for previewing videos.
+ *
  *  Video File Content
  *
  *  <blockquote><pre>
  *  data format: {
  *      "type" : i2s(0x16),
- *      "sn"   : 123,
+ *      "sn"   : 12345,
  *
  *      "data"     : "...",        // base64_encode(fileContent)
  *      "filename" : "movie.mp4",
@@ -55,6 +59,10 @@ package chat.dim.protocol;
  */
 public interface VideoContent extends FileContent {
 
+    /**
+     *  Snapshot (preview image) of the video (Base64 encoded).
+     *  Usually the first frame.
+     */
     void setSnapshot(TransportableFile img);
 
     TransportableFile getSnapshot();

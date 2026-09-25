@@ -37,30 +37,36 @@ import chat.dim.ext.SharedCommandExtensions;
 import chat.dim.protocol.Command;
 import chat.dim.protocol.ContentType;
 
-/**
- *  Base Command Content
- *
- *  <blockquote><pre>
- *  data format: {
- *      "type" : i2s(0x88),
- *      "sn"   : 123,
- *
- *      "command" : "...", // command name
- *      "extra"   : info   // command parameters
- *  }
- *  </pre></blockquote>
- */
+
 public class BaseCommand extends BaseContent implements Command {
 
+    /**
+     * Create command with a raw map.
+     *
+     * @param content - raw command map.
+     */
     public BaseCommand(Map<String, Object> content) {
         super(content);
     }
 
+    /**
+     * Create command with the given message type and command name.
+     *
+     * @param type - message type
+     * @param cmd  - command name
+     */
     public BaseCommand(String type, String cmd) {
         super(type);
         put("command", cmd);
     }
 
+    /**
+     * Create command with the given command name.
+     *
+     * The message type will be set to {@link ContentType#COMMAND} automatically.
+     *
+     * @param cmd - command name
+     */
     public BaseCommand(String cmd) {
         this(ContentType.COMMAND, cmd);
     }

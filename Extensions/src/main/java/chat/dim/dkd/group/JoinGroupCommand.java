@@ -37,24 +37,22 @@ import chat.dim.protocol.group.GroupCommand;
 import chat.dim.protocol.group.JoinCommand;
 
 
-/**
- *  Group history command: {
- *      "type" : i2s(0x89),
- *      "sn"   : 123,
- *
- *      "command" : "join",
- *      "time"    : 123.456,
- *
- *      "group"   : "{GROUP_ID}",
- *      "text"    : "May I?",
- *  }
- */
 public class JoinGroupCommand extends BaseGroupCommand implements JoinCommand {
 
+    /**
+     * Create join command with a raw map.
+     *
+     * @param content - raw command map.
+     */
     public JoinGroupCommand(Map<String, Object> content) {
         super(content);
     }
 
+    /**
+     * Create join command with the given group.
+     *
+     * @param group - the group ID
+     */
     public JoinGroupCommand(ID group) {
         super(GroupCommand.JOIN, group);
     }

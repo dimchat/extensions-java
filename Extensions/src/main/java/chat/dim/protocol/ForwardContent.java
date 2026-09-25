@@ -36,6 +36,10 @@ import java.util.List;
 import chat.dim.dkd.SecretContent;
 
 /**
+ *  Top-secret forward content.
+ *
+ *  Wraps secure and certified messages.
+ *
  *  Top-Secret Content
  *
  *  <blockquote><pre>

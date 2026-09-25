@@ -40,11 +40,17 @@ import chat.dim.protocol.TransportableData;
 
 /**
  *  General Document Factory
+ *
+ *  Creates documents by type, supporting VISA, BULLETIN and other
+ *  (customized) document types.
  */
 public class GeneralDocumentFactory implements Document.Factory {
 
     protected final String type;
 
+    /**
+     *  Create factory for the given document type.
+     */
     public GeneralDocumentFactory(String docType) {
         super();
         type = docType;
@@ -63,6 +69,11 @@ public class GeneralDocumentFactory implements Document.Factory {
         // 2. create document with data & signature from local storage
         return createValidDocument(data, signature);
     }
+    /**
+     *  Create an empty document.
+     *
+     *  A new document with default properties will be created.
+     */
     protected Document createEmptyDocument() {
         String docType = type;
         Document out;
@@ -82,6 +93,12 @@ public class GeneralDocumentFactory implements Document.Factory {
         }
         return out;
     }
+    /**
+     *  Create a valid document.
+     *
+     *  @param data - document data in JSON format
+     *  @param signature - signature of data
+     */
     protected Document createValidDocument(String data, TransportableData signature) {
         String docType = type;
         Document out;

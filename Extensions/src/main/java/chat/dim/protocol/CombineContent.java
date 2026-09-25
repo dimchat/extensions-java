@@ -35,12 +35,16 @@ import java.util.List;
 import chat.dim.dkd.CombineForwardContent;
 
 /**
+ *  Combined forward content for chat history forwarding.
+ *
+ *  Special message format designed to forward a set of chat records as a single message.
+ *
  *  Combine Forward Content
  *
  *  <blockquote><pre>
  *  data format: {
  *      "type" : i2s(0xCF),
- *      "sn"   : 123,
+ *      "sn"   : 12345,
  *
  *      "title"    : "...",  // chat title
  *      "messages" : [...]   // chat history
@@ -49,8 +53,14 @@ import chat.dim.dkd.CombineForwardContent;
  */
 public interface CombineContent extends Content {
 
+    /**
+     *  Title for the forwarded chat history set.
+     */
     String getTitle();
 
+    /**
+     *  List of chat records (instant messages) to be forwarded.
+     */
     List<InstantMessage> getMessages();
 
     //

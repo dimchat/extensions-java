@@ -70,6 +70,7 @@ public final class DefaultMeta extends BaseMeta {
         //assert Meta.MKM.equals(getType()) || "1".equals(getType()) : "meta version error: " + getType();
         TransportableData data = getFingerprint();
         assert data != null && !data.isEmpty() : "meta.fingerprint empty";
+        // generate BTC address with fingerprint
         return BTCAddress.generate(data.getBytes(), (byte) network);
     }
 }

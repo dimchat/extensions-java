@@ -42,9 +42,19 @@ import chat.dim.protocol.Meta;
 import chat.dim.protocol.MetaType;
 
 
-// MixIn
+/**
+ * Entity extensions.
+ *
+ * Registers the default factories for address, ID, meta and document,
+ * so that entities can be created/parsed by type automatically.
+ */
 public interface EntityExtensions {
 
+    /**
+     * Register the default {@link ID.Factory}.
+     *
+     * Sets {@link IdentifierFactory} as the global ID factory.
+     */
     // protected
     default void registerIDFactory() {
 
@@ -52,6 +62,11 @@ public interface EntityExtensions {
 
     }
 
+    /**
+     * Register the default {@link Address.Factory}.
+     *
+     * Sets {@link BaseAddressFactory} as the global address factory.
+     */
     // protected
     default void registerAddressFactory() {
 
@@ -59,6 +74,9 @@ public interface EntityExtensions {
 
     }
 
+    /**
+     * Register the default meta factories (MKM/BTC/ETH).
+     */
     // protected
     default void registerMetaFactories() {
 
@@ -67,6 +85,14 @@ public interface EntityExtensions {
         setMetaFactory(MetaType.ETH, null);
 
     }
+
+    /**
+     * Register a meta factory for the given type.
+     *
+     * @param type - the meta algorithm type, such as "mkm"/"btc"/"eth"
+     * @param factory - the factory instance; if null, a new
+     *                  {@link BaseMetaFactory} for type will be created
+     */
     // protected
     default void setMetaFactory(String type, Meta.Factory factory) {
         if (factory == null) {
@@ -75,6 +101,12 @@ public interface EntityExtensions {
         Meta.setFactory(type, factory);
     }
 
+    /**
+     * Register the default document factories.
+     *
+     * Registers factories for VISA, PROFILE, BULLETIN and the
+     * wildcard type '*' (fallback for unknown document types).
+     */
     // protected
     default void registerDocumentFactories() {
 
@@ -84,6 +116,15 @@ public interface EntityExtensions {
         setDocumentFactory(DocumentType.BULLETIN, null);
 
     }
+
+    /**
+     * Register a document factory for the given type.
+     *
+     * @param type - the document type, such as "visa"/"profile"/"bulletin";
+     *               use '*' to register the default factory for unknown types
+     * @param factory - the factory instance; if null, a new
+     *                  {@link GeneralDocumentFactory} for type will be created
+     */
     // protected
     default void setDocumentFactory(String type, Document.Factory factory) {
         if (factory == null) {

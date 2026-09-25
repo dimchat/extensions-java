@@ -43,7 +43,9 @@ import chat.dim.protocol.ID;
 import chat.dim.protocol.ReceiptCommand;
 
 /**
- *  Command GeneralHelper
+ * General command helper.
+ *
+ * Creates/parses commands and manages command factories.
  */
 public class GeneralCommandHelper implements CommandHandler, CommandHelper {
 
@@ -83,11 +85,12 @@ public class GeneralCommandHelper implements CommandHandler, CommandHelper {
         return content;
     }
 
-    /// Get a mutable map from an object.
-    ///
-    /// [dict] is a raw map or a mapping instance;
-    /// returns null if it cannot be converted.
-    // protected
+    /**
+     * Get a mutable map from an object.
+     *
+     * @param dict - a raw map or a mapping instance;
+     * @return null if it cannot be converted.
+     */
     protected Map<String, Object> getMap(Object dict) {
         return Wrapper.getMap(dict);
     }
@@ -133,6 +136,12 @@ public class GeneralCommandHelper implements CommandHandler, CommandHelper {
         return factory.parseCommand(info);
     }
 
+    /**
+     * Get the default command factory.
+     *
+     * @param info - the raw command map;
+     * @return the factory registered for the 'command' field, or the 'ANY' factory.
+     */
     private static Command.Factory getDefaultFactory(Map<?, ?> info) {
         MessageHandler handler = SharedMessageExtensions.handler;
         ContentHelper helper = SharedMessageExtensions.contentHelper;

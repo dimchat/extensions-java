@@ -38,22 +38,16 @@ import chat.dim.protocol.ArrayContent;
 import chat.dim.protocol.Content;
 import chat.dim.protocol.ContentType;
 
-/**
- *  Array Content
- *
- *  <blockquote><pre>
- *  data format: {
- *      "type" : i2s(0xCA),
- *      "sn"   : 123,
- *
- *      "contents" : [...]  // content array
- *  }
- *  </pre></blockquote>
- */
+
 public class ListContent extends BaseContent implements ArrayContent {
 
     private List<Content> list;
 
+    /**
+     * Create content array with a raw map.
+     *
+     * @param content - raw map, usually from network or storage.
+     */
     public ListContent(Map<String, Object> content) {
         super(content);
         // lazy load

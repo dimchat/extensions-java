@@ -37,25 +37,16 @@ import chat.dim.protocol.ID;
 import chat.dim.protocol.NameCard;
 import chat.dim.protocol.TransportableFile;
 
-/**
- *  Name Card
- *
- *  <blockquote><pre>
- *  data format: {
- *      "type" : i2s(0x33),
- *      "sn"   : 123,
- *
- *      "did"    : "{ID}",        // contact's ID
- *      "name"   : "{nickname}",  // contact's name
- *      "avatar" : "{URL}",       // avatar - PNF(URL)
- *      ...
- *  }
- *  </pre></blockquote>
- */
+
 public class NameCardContent extends BaseContent implements NameCard {
 
     private TransportableFile image;
 
+    /**
+     * Create name card content with a raw map.
+     *
+     * @param content - raw map, usually from network or storage.
+     */
     public NameCardContent(Map<String, Object> content) {
         super(content);
         // lazy load

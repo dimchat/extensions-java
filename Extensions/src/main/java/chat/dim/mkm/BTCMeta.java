@@ -76,6 +76,7 @@ public final class BTCMeta extends BaseMeta {
         // TODO: compress public key?
         TransportableData data = key.getData();
         assert data != null && !data.isEmpty() : "meta.key error: " + key;
+        // generate BTC address with public key data
         return BTCAddress.generate(data.getBytes(), (byte) network);
     }
 }

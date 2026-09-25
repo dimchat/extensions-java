@@ -40,27 +40,7 @@ import chat.dim.protocol.ID;
 import chat.dim.protocol.InstantMessage;
 import chat.dim.type.Dictionary;
 
-/**
- *  Message Content
- *  <p>
- *      This class is for creating message content
- *  </p>
- *
- *  <blockquote><pre>
- *  data format: {
- *      "type"    : i2s(0),         // message type
- *      "sn"      : 0,              // serial number
- *
- *      "time"    : 123,            // message time
- *      "group"   : "{GroupID}",    // for group message
- *
- *      //-- message info
- *      "text"    : "text",         // for text message
- *      "command" : "Command Name"  // for system command
- *      //...
- *  }
- *  </pre></blockquote>
- */
+
 public class BaseContent extends Dictionary implements Content {
 
     // message type: text, image, ...
@@ -72,6 +52,11 @@ public class BaseContent extends Dictionary implements Content {
     // message time
     private Date time;
 
+    /**
+     * Create content with a raw map.
+     *
+     * @param content - raw map, usually from network or storage.
+     */
     public BaseContent(Map<String, Object> content) {
         super(content);
         // lazy load
@@ -80,6 +65,13 @@ public class BaseContent extends Dictionary implements Content {
         time = null;
     }
 
+    /**
+     * Create content with the given message type.
+     *
+     * Generates a new serial number and message time automatically.
+     *
+     * @param msgType - message type
+     */
     public BaseContent(String msgType) {
         super();
         Date now = new Date();
@@ -107,7 +99,7 @@ public class BaseContent extends Dictionary implements Content {
         Long number = sn;
         if (number == null) {
             number = getLong("sn", 0L);
-            //assert number > 0 : "serial number error: " + toMap();
+            assert number > 0 : "serial number error: " + toMap();
             sn = number;
         }
         return number == null ? 0 : number;
@@ -132,4 +124,5 @@ public class BaseContent extends Dictionary implements Content {
     public void setGroup(ID group) {
         setString("group", group);
     }
+
 }

@@ -37,25 +37,7 @@ import chat.dim.protocol.ContentType;
 import chat.dim.protocol.Envelope;
 import chat.dim.protocol.QuoteContent;
 
-/**
- *  Quote Content
- *
- *  <blockquote><pre>
- *  data format: {
- *      "type" : i2s(0x37),
- *      "sn"   : 456,
- *
- *      "text"   : "...",  // text message
- *      "origin" : {       // original message envelope
- *          "sender"   : "...",
- *          "receiver" : "...",
- *
- *          "type"     : i2s(0x01),
- *          "sn"       : 123,
- *      }
- *  }
- *  </pre></blockquote>
- */
+
 public class BaseQuoteContent extends BaseContent implements QuoteContent {
 
     /**
@@ -63,10 +45,21 @@ public class BaseQuoteContent extends BaseContent implements QuoteContent {
      */
     private Envelope envelope = null;
 
+    /**
+     * Create quote content with a raw map.
+     *
+     * @param content - raw map, usually from network or storage.
+     */
     public BaseQuoteContent(Map<String, Object> content) {
         super(content);
     }
 
+    /**
+     * Create quote content with the given text and origin.
+     *
+     * @param text   - the quote text
+     * @param origin - the envelope of the original message being quoted.
+     */
     public BaseQuoteContent(String text, Map<String, Object> origin) {
         super(ContentType.QUOTE);
         // text message
@@ -109,4 +102,5 @@ public class BaseQuoteContent extends BaseContent implements QuoteContent {
         }
         return Converter.getLong(origin.get("sn"));
     }
+
 }

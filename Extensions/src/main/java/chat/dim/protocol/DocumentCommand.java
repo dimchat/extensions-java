@@ -36,27 +36,32 @@ import java.util.List;
 import chat.dim.dkd.cmd.BaseDocumentCommand;
 
 /**
+ *  Document command interface for querying/updating entity documents.
+ *
+ *  Extends {@link MetaCommand} to support document operations (Visa for users, Bulletin for groups).
+ *
  *  Document Command
  *
  *  <blockquote><pre>
  *  data format: {
  *      "type" : i2s(0x88),
- *      "sn"   : 123,
+ *      "sn"   : 12345,
  *
  *      "command"   : "documents", // command name
  *      "did"       : "{ID}",      // entity ID
  *      "meta"      : {...},       // only for handshaking with new friend
  *      "documents" : [...],       // when this is null, means to query
- *      "last_time" : 12345        // old document time for querying
+ *      "last_time" : 123.45       // old document time for querying
  *  }
  *  </pre></blockquote>
  */
 public interface DocumentCommand extends MetaCommand {
 
-    String DOCUMENTS = "documents";
+    String DOCUMENTS = "documents";  // querying/updating entity documents
 
     /**
-     *  Entity Documents
+     *  Gets the list of entity documents (Visa/Bulletin).
+     *  Non-null: Response; Null: Query request.
      */
     List<Document> getDocuments();
 
@@ -71,10 +76,31 @@ public interface DocumentCommand extends MetaCommand {
     //  Factories
     //
 
+    /**
+     *  Creates a query document command to request entity documents.
+     *
+     *  Use this to query all documents for an entity, or provide a non-null
+     *  last time to request only documents updated since then.
+     *
+     * @param did   target entity ID (user/group ID) to query
+     * @param last  optional timestamp for incremental updates
+     * @return a DocumentCommand instance for document query
+     */
     static DocumentCommand query(ID did, Date last) {
         return new BaseDocumentCommand(did, last);
     }
 
+    /**
+     *  Creates a response document command with entity documents.
+     *
+     *  Use this to send metadata + documents to a new friend (handshake),
+     *  or to respond to a document query request.
+     *
+     * @param did        target entity ID (user/group ID)
+     * @param meta       optional metadata (for handshake scenarios)
+     * @param documents  list of documents to return for the entity
+     * @return a DocumentCommand instance containing the documents
+     */
     static DocumentCommand response(ID did, Meta meta, List<Document> documents) {
         return new BaseDocumentCommand(did, meta, documents);
     }

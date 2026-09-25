@@ -36,12 +36,17 @@ import java.util.Map;
 import chat.dim.dkd.BaseQuoteContent;
 
 /**
+ *  Quote reply message content interface.
+ *
+ *  Used to create "quote reply" messages that reference a previous message
+ *  (the "original" message) with additional text commentary.
+ *
  *  Quote Content
  *
  *  <blockquote><pre>
  *  data format: {
  *      "type" : i2s(0x37),
- *      "sn"   : 456,
+ *      "sn"   : 67890,
  *
  *      "text"   : "...",  // text message
  *      "origin" : {       // original message envelope
@@ -49,16 +54,26 @@ import chat.dim.dkd.BaseQuoteContent;
  *          "receiver" : "...",
  *
  *          "type"     : i2s(0x01),
- *          "sn"       : 123,
+ *          "sn"       : 12345,
  *      }
  *  }
  *  </pre></blockquote>
  */
 public interface QuoteContent extends Content {
 
+    /**
+     *  Reply text.
+     */
     String getText();
 
+    /**
+     *  Envelope of the original message being quoted.
+     */
     Envelope getOriginalEnvelope();
+
+    /**
+     *  Serial number of the original message for locating the chat history.
+     */
     Long getOriginalSerialNumber();
 
     //
